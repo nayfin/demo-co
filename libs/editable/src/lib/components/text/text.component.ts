@@ -34,7 +34,7 @@ export class TextComponent implements OnInit {
 
   ngOnInit() {
     this.control = new FormControl(
-      this.textValue,
+      this._textValue,
       this.validators
     );
   }
