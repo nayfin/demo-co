@@ -207,6 +207,31 @@
           }
         }
       }
+    },
+    "editable": {
+      "projectType": "library",
+      "root": "libs/editable",
+      "sourceRoot": "libs/editable/src",
+      "prefix": "editable",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/editable/src/**/*.ts",
+              "libs/editable/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/editable"],
+          "options": {
+            "jestConfig": "libs/editable/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
