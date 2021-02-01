@@ -47,7 +47,15 @@
             "polyfills": "apps/demo/src/polyfills.ts",
             "tsConfig": "apps/demo/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/demo/src/favicon.ico", "apps/demo/src/assets"],
+            "assets": [
+              "apps/demo/src/favicon.ico",
+              "apps/demo/src/assets",
+              {
+                "input": "libs/editable/src/assets",
+                "glob": "*.svg",
+                "output": "assets"
+              }
+            ],
             "styles": ["apps/demo/src/styles.scss"],
             "scripts": []
           },
