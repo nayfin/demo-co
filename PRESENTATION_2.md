@@ -8,14 +8,34 @@ See [nx docs](https://nx.dev/latest/angular/plugins/storybook/overview) for more
 
 
 ```bash
-npm i -D @nrwl/storybook @storybook/addon-actions
+npm i -D @nrwl/storybook @storybook/addon-actions @storybook/addon-docs
 ```
 
 ### 2) Generate Storybook Configuration
 
+Run Nx storybook schematic
+
 ```bash
 nx g @nrwl/angular:storybook-configuration <project-name>
 ```
+
+Configure additional plugins in `<workspace-name>/.storybook/main.js`
+
+```js
+module.exports = {
+  stories: [],
+  addons: [
+    '@storybook/addon-knobs/register',
+    '@storybook/addon-actions/register',
+    '@storybook/addon-docs/register'
+  ],
+};
+```
+
+
+
+
+
 ### 3) Add Compodoc
 
 ```bash
