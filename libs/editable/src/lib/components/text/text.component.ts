@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ValidatorFn } from '@angular/forms';
 
+/**
+ * The possible states of an Editable Component
+ */
 export type EditableState = 'editing' | 'updating' | 'displaying';
 
 /**
