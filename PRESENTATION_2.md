@@ -32,6 +32,49 @@ module.exports = {
 };
 ```
 
+Now run storybook
+
+```bash
+nx run <project-name>:storybook
+```
+
+And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't provided it in the Storybook context. So import `ReactiveFormsModule` in the story and add it to the `moduleMetadata` property of the `primary` story.
+
+```ts
+export const primary = () => ({
+  moduleMetadata: {
+    imports: [
+      ReactiveFormsModule
+    ]
+  }
+})
+```
+
+Now, we can our story in the browser, including a knob for each of our inputs, all courtesy of the Nx Storybook plugin. Let's organize our story so we can have a story to represent each state.
+
+### 3) Setup some stories
+
+We'll start by adding some actions. Actions allow us to hook into the methods of our component, we'll use them to check the values emitted by our outputs. We'll make it easy to reuse them by creating an object of our actions
+
+```ts
+const actionsData = {
+  updateText: action('updateText'),
+  cancelEdit: action('cancelEdit'),
+  startEdit:  action('startEdit')
+};
+```
+
+We'll tell Storybook not to try and render these actions by adding the `excludeStories` property to the default export
+
+```ts
+export default {
+  title: 'TextComponent',
+  component: TextComponent,
+  excludeStories: /.*Data$/, // Tells storybook to not render anything that ends with `Data`
+}
+```
+
+
 
 
 
@@ -43,6 +86,7 @@ nx add @twittwer/compodoc
 nx g @twittwer/compodoc:config <project-name>
 
 ```
+
 <!-- #### NOTE: Compodoc can be run with the following commands
     ```bash
     // HTML Format
