@@ -16,28 +16,41 @@ export default {
   excludeStories: /.*Data$/
 } as Meta;
 
-export const displaying = () => ({
-  moduleMetadata: {
-    imports: [
-      ReactiveFormsModule
-    ]
-  },
-  component: TextComponent,
-  props: {
-    state: 'displaying',
-    textValue: 'Ziggy Stardust'
-  }
-});
+const textStoryFactory: AngularStoryFactory<TextComponent> = (props) => {
+  return () => ({
+    component: TextComponent,
+    moduleMetadata: {
+      imports: [ReactiveFormsModule]
+    },
+    props: {
+      textValue: 'Ziggy Stardust',
+      ...props
+    }
+  })
+}
 
-export const editing = () => ({
-  moduleMetadata: {
-    imports: [
-      ReactiveFormsModule
-    ]
-  },
-  component: TextComponent,
-  props: {
-    state: 'editing',
-    textValue: 'Ziggy Stardust'
-  }
-});
+export const displaying = textStoryFactory({state: 'displaying'});
+
+export const editing = textStoryFactory({state: 'editing'});
+
+export const updating = textStoryFactory({state: 'updating'});
+
+
+// Another way to abstract story creation
+// const Template: Story<TextComponent> = (args: TextComponent) => ({
+//   component: TextComponent,
+//   moduleMetadata: {
+//     imports: [ReactiveFormsModule]
+//   },
+//   props: args
+// });
+
+// export const Displaying = Template.bind({});
+// Displaying.args = {
+//   state: 'displaying'
+// };
+
+// export var Editing = Template.bind({});
+// Displaying.arg = {
+//   state: 'editing'
+// }
