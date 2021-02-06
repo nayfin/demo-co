@@ -1,11 +1,18 @@
-import { IStory, Story, Meta } from '@storybook/angular'
+import { IStory, Meta, /* Story */ } from '@storybook/angular';
 import { text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TextComponent } from './text.component';
 
 type AngularStoryFactory<T = any> = (props: Partial<T>) => () => IStory;
+
+const actionData = {
+  updateText: action('updateText'),
+  cancelEdit: action('cancelEdit'),
+  startEdit : action('startEdit'),
+}
 
 export default {
   // The title to display in the sidenav
@@ -24,6 +31,7 @@ const textStoryFactory: AngularStoryFactory<TextComponent> = (props) => {
     },
     props: {
       textValue: 'Ziggy Stardust',
+      ...actionData,
       ...props
     }
   })
