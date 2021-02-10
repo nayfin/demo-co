@@ -1,5 +1,4 @@
-import { IStory, Meta, /* Story */ } from '@storybook/angular';
-import { text } from '@storybook/addon-knobs';
+import { IStory, Meta, Story } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,46 +18,38 @@ export default {
   title: 'Components/Editable Text Component',
   // The component the story is for, this should create docs auto-magically
   component: TextComponent,
+  argTypes: {
+    backgroundColor: { control: 'color' },
+  },
   // The values we don't want rendered by Storybook, here anything that ends with 'Data'
   excludeStories: /.*Data$/
 } as Meta;
 
-const textStoryFactory: AngularStoryFactory<TextComponent> = (props) => {
-  return () => ({
-    component: TextComponent,
-    moduleMetadata: {
-      imports: [ReactiveFormsModule]
-    },
-    props: {
-      textValue: 'Ziggy Stardust',
-      ...actionData,
-      ...props
-    }
-  })
-}
-
-export const displaying = textStoryFactory({state: 'displaying'});
-
-export const editing = textStoryFactory({state: 'editing'});
-
-export const updating = textStoryFactory({state: 'updating'});
-
 
 // Another way to abstract story creation
-// const Template: Story<TextComponent> = (args: TextComponent) => ({
-//   component: TextComponent,
-//   moduleMetadata: {
-//     imports: [ReactiveFormsModule]
-//   },
-//   props: args
-// });
+const template: Story<TextComponent> = (args: TextComponent): IStory => ({
+  component: TextComponent,
+  moduleMetadata: {
+    imports: [ReactiveFormsModule]
+  },
+  props: {
+    textValue: 'initialValue',
+    ...args
+  }
+});
 
-// export const Displaying = Template.bind({});
-// Displaying.args = {
-//   state: 'displaying'
-// };
+export const editing = template.bind({});
+editing.args = {
+  state: 'editing',
+};
 
-// export var Editing = Template.bind({});
-// Displaying.arg = {
-//   state: 'editing'
-// }
+export const displaying = template.bind({});
+displaying.args = {
+  state: 'displaying',
+};
+
+export const updating = template.bind({});
+updating.args = {
+  state: 'updating',
+};
+
