@@ -32,7 +32,9 @@ And we get an error, but this expected as our component depends on the `Reactive
 
 So import `ReactiveFormsModule` in the story and add it to the `moduleMetadata` property of the `primary` story.
 
+
 ```ts
+// text.component.stories.ts
 export const primary = () => ({
   moduleMetadata: {
     imports: [
@@ -42,9 +44,63 @@ export const primary = () => ({
 })
 ```
 
-### 3) Replace knobs with controls
+You'll notice the `knobs` generated in our story by the nx schematic. While these are great, Storybook is evolving rapidly, and the `knobs` API is being replaced with a new `controls` API.
 
-You'll notice the `knobs` generated in our story by the nx schematic. While these are great, Storybook is evolving rapidly, and the `knobs` API is being replaced with a new `controls` API. So we need to update the configuration to use this API and we'll get a docs out of it for free.
+### 03-convert-to-templated-stories
+
+  Soon well replace the `knobs` with some `controls` but first let's just remove the `knobs` and create a template for our stories that we can use to represent different states. Replace entire `text.component.stories.ts` file with the following:
+
+```ts
+import { ReactiveFormsModule } from '@angular/forms';
+import { IStory, Story } from '@storybook/angular';
+import { TextComponent } from './text.component';
+
+export default {
+  // The title in sidenav for our group of stories for this component
+  title: 'Editable Text Component'
+}
+
+// A template we can reuse to easily create a new story to represent each state of our component
+const template: Story<TextComponent> = (args: TextComponent): IStory => ({
+  // The component the story represents
+  component: TextComponent,
+  // Module dependencies can be configured here
+  moduleMetadata: {
+    imports: [ReactiveFormsModule]
+  },
+  // Declare property values that should be duplicated across stories here
+  props: {
+    textValue: 'initialValue',
+    ...args
+  }
+});
+
+// story representing editing state
+export const editing = template.bind({});
+editing.args = {
+  state: 'editing',
+};
+
+// story representing editing state
+export const displaying = template.bind({});
+displaying.args = {
+  state: 'displaying',
+};
+
+// story representing editing state
+export const updating = template.bind({});
+updating.args = {
+  state: 'updating',
+};
+```
+
+Now we have story to represent each state of our component. Next let's add the `essentials` addon and see what that gets us.
+
+
+
+
+ So we need to update the configuration to use this API and we'll get a docs out of it for free.
+
 
 
 ### 3) Setup some stories

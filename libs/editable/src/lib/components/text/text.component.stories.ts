@@ -1,21 +1,42 @@
 import { ReactiveFormsModule } from '@angular/forms';
-import { text, number, boolean } from '@storybook/addon-knobs';
+import { IStory, Story } from '@storybook/angular';
 import { TextComponent } from './text.component';
 
 export default {
-  title: 'TextComponent'
+  // The title in sidenav for our group of stories for this component
+  title: 'Editable Text Component'
 }
 
-export const primary = () => ({
-  moduleMetadata: {
-    imports: [
-      ReactiveFormsModule
-    ]
-  },
+// A template we can reuse to easily create a new story to represent each state of our component
+const template: Story<TextComponent> = (args: TextComponent): IStory => ({
+  // The component the story represents
   component: TextComponent,
+  // Module dependencies can be configured here
+  moduleMetadata: {
+    imports: [ReactiveFormsModule]
+  },
+  // Declare property values that should be duplicated across stories here
   props: {
-    backgroundColor: text('backgroundColor', `#D0B0DA`),
-    state: text('state', 'editing'),
-    textValue: text('textValue', ''),
+    textValue: 'initialValue',
+    ...args
   }
-})
+});
+
+// story representing editing state
+export const editing = template.bind({});
+editing.args = {
+  state: 'editing',
+};
+
+// story representing editing state
+export const displaying = template.bind({});
+displaying.args = {
+  state: 'displaying',
+};
+
+// story representing editing state
+export const updating = template.bind({});
+updating.args = {
+  state: 'updating',
+};
+
