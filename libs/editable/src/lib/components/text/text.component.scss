@@ -1,21 +1,28 @@
-input.text-input, p {
-  margin: 0;
-  font-family: monospace;
-}
+:host {
+  display: inline-flex;
+  input.text-input, p {
+    margin: 0;
+    font-family: monospace;
+    border: 0;
+    border-bottom: 1px solid grey;
+    background: rgb(0 0 0 / 0%);
+  }
 
-.icon {
-  height: 1em;
-  width: 1em;
-  img {
+  .icon {
     height: 1em;
     width: 1em;
+    img {
+      height: 1em;
+      width: 1em;
+    }
+    &.loading-icon img {
+      animation: spin 3s linear infinite;
+    }
   }
-  &.loading-icon img {
-    animation: spin 3s linear infinite;
+
+  @keyframes spin {
+    from { transform: rotate(0deg)}
+    to { transform: rotate(360deg)}
   }
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg)}
-  to { transform: rotate(360deg)}
-}
