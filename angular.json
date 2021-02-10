@@ -286,6 +286,36 @@
               "quiet": true
             }
           }
+        },
+        "compodoc": {
+          "builder": "@twittwer/compodoc:compodoc",
+          "options": {
+            "tsConfig": "libs\\editable\\tsconfig.lib.json",
+            "outputPath": "dist\\compodoc\\editable"
+          },
+          "configurations": {
+            "json": {
+              "exportFormat": "json"
+            }
+          }
+        },
+        "storydoc-watch": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "npx nx run editable:compodoc:json --watch",
+              "npx nx run editable:storybook"
+            ]
+          }
+        },
+        "storydoc-build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "npx nx run editable:compodoc:json",
+              "npx nx run editable:build-storybook"
+            ]
+          }
         }
       }
     },
