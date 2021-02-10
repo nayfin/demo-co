@@ -96,10 +96,22 @@ updating.args = {
 
 Now we have story to represent each state of our component. Next let's add the `essentials` addon and see what that gets us.
 
+### 04-add-storybook-essentials
 
+We already installed `@storybook/essentials` earlier, so we just need to update the configuration to use this API and we'll get a docs out of it for free.
 
+First, replace `knobs` addon with `essentials` in `<workspace-name>/.storybook/main.js`.
 
- So we need to update the configuration to use this API and we'll get a docs out of it for free.
+```js
+module.exports = {
+  stories: [],
+  addons: [
+    "@storybook/addon-essentials"
+  ]
+};
+```
+
+Then, remove everything from `libs/<library-name>/.storybook/preview.js` but don't remove file, we'll need it later.
 
 
 
