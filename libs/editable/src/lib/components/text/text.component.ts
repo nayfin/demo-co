@@ -29,7 +29,6 @@ export class TextComponent implements OnInit {
       this.control.setValue(value);
     }
   }
-  @Input() validators: ValidatorFn[] = [];
 
   @Output() updateText = new EventEmitter<string>();
   @Output() cancelEdit = new EventEmitter();
@@ -39,8 +38,7 @@ export class TextComponent implements OnInit {
 
   ngOnInit() {
     this.control = new FormControl(
-      this._textValue,
-      this.validators
+      this._textValue
     );
   }
 
