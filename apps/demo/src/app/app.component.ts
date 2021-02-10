@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@demo-co/api-interfaces';
 import { EditableState } from '@demo-co/editable';
 
 @Component({
