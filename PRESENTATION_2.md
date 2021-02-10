@@ -11,7 +11,7 @@ See [nx docs](https://nx.dev/latest/angular/plugins/storybook/overview) for more
 npm i -D @nrwl/storybook @storybook/essentials
 ```
 
-### 2) Generate Storybook Configuration
+### 01-installs-storybook
 
 Run Nx storybook schematic
 
@@ -25,7 +25,12 @@ Now run storybook
 nx run <project-name>:storybook
 ```
 
-And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't provided it in the story's configuration. So import `ReactiveFormsModule` in the story and add it to the `moduleMetadata` property of the `primary` story.
+And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't provided it in the story's configuration.
+
+
+### 02-import-required-modules
+
+So import `ReactiveFormsModule` in the story and add it to the `moduleMetadata` property of the `primary` story.
 
 ```ts
 export const primary = () => ({
