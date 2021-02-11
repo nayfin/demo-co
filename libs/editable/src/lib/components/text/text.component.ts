@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 /**
  * The possible states of an Editable Component
@@ -17,9 +17,13 @@ export type EditableState = 'editing' | 'updating' | 'displaying';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextComponent implements OnInit {
-
+  /**
+   * Controls background color of control
+   */
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
-
+  /**
+   * Controls interactive state of control
+   */
   @Input() state: EditableState = 'editing';
 
   _textValue = '';

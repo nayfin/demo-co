@@ -139,16 +139,16 @@ Configure storybook-watch & storybook-build targets in angular.json:
         "compodoc": {
           /* existing @twittwer/compodoc config */
         },
-        "storydoc-watch": {
+        "storydoc": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "npx nx run <project>:compodoc:json-watch",
+              "npx nx run <project>:compodoc:json --watch",
               "npx nx run <project>:storybook"
             ]
           }
         },
-        "storydoc-build": {
+        "build-storydoc": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
@@ -161,6 +161,18 @@ Configure storybook-watch & storybook-build targets in angular.json:
     }
   }
 }
+```
+
+And the last step is in the `text.component.stories.ts` file. We just need to assign a story to the default export.
+
+```ts
+export default {
+  // The title in sidenav for our group of stories for this component
+  title: 'Editable Text Component',
+  // Connects the story to the generated docs
+  component: TextComponent
+}
+
 ```
 
 ### 3) Setup some stories

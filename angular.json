@@ -299,7 +299,7 @@
             }
           }
         },
-        "storydoc-watch": {
+        "storydoc": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
@@ -308,7 +308,7 @@
             ]
           }
         },
-        "storydoc-build": {
+        "build-storydoc": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
