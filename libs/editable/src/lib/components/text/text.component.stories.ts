@@ -1,13 +1,24 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { IStory, Story } from '@storybook/angular';
-import { EditableModule } from '../../editable.module';
 import { TextComponent } from './text.component';
 
 export default {
   // The title in sidenav for our group of stories for this component
   title: 'Editable Text Component',
   // Connects the story to the generated docs
-  component: TextComponent
+  component: TextComponent,
+  // Refine Storybook controls here
+  argTypes: {
+    // use color picker to control backgroundColor input
+    backgroundColor: { control: 'color'},
+    // use select to control state input
+    state: {
+      control: {
+        type: 'select',
+        options: ['displaying', 'editing', 'updating']
+      }
+    }
+  }
 }
 
 // A template we can reuse to easily create a new story to represent each state of our component
