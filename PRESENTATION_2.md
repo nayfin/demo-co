@@ -122,8 +122,7 @@ nx g @twittwer/compodoc:config <project-name>
 
 ```
 
-
-Configure storybook-watch & storybook-build targets in angular.json:
+Configure new commands targets in `angular.json` file to :
 
 ```json
 {
@@ -172,64 +171,73 @@ export default {
   // Connects the story to the generated docs
   component: TextComponent
 }
-
 ```
 
-### 3) Setup some stories
-
-We'll start by adding some actions. Actions allow us to hook into the methods of our component, we'll use them to check the values emitted by our outputs. We'll make it easy to reuse them by creating an object of our actions
+Now we can add some comments to the properties of the `TextComponent` code and it will be reflected in our Storybook docs.
 
 ```ts
-const actionsData = {
-  updateText: action('updateText'),
-  cancelEdit: action('cancelEdit'),
-  startEdit:  action('startEdit')
-};
-```
-
-We'll tell Storybook not to try and render these actions by adding the `excludeStories` property to the default export
-
-```ts
-export default {
-  title: 'TextComponent',
-  component: TextComponent,
-  excludeStories: /.*Data$/, // Tells storybook to not render anything that ends with `Data`
+export class TextComponent implements OnInit {
+  /**
+   * Controls background color of control
+   */
+  @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
+  /**
+   * Controls interactive state of control
+   */
+  @Input() state: EditableState = 'editing';
+  ...
 }
 ```
 
+### 06-enhance-controls
 
-
-
-
-
-
-<!-- #### NOTE: Compodoc can be run with the following commands
-    ```bash
-    // HTML Format
-    nx run <project>:compodoc
-    // JSON Format
-    nx run <project>:compodoc:json
-    ``` -->
-
-### 5) Configure Storybook to integrate with Compodoc
-
-
-Configure Storybook Docs in libs/<project-name>/.storybook/preview.js:
+We have controls working, but let's refine the `controls` so that they only allow appropriate values. To do this we simply update the `default` export in `text.component.stories.ts` like so:
 
 ```ts
-import { setCompodocJson } from '@storybook/addon-docs/angular';
-import compodocJson from '../../../dist/compodoc/<project-name>/documentation.json';
-
-setCompodocJson(compodocJson);
-
+export default {
+  // The title in sidenav for our group of stories for this component
+  title: 'Editable Text Component',
+  // Connects the story to the generated docs
+  component: TextComponent,
+  // Refine Storybook controls here
+  argTypes: {
+    // use color picker to control backgroundColor input
+    backgroundColor: { control: 'color'},
+    // use select to control state input
+    state: {
+      control: {
+        type: 'select',
+        options: ['displaying', 'editing', 'updating']
+      }
+    }
+  }
+}
 ```
 
-### 4) Run Storybook
+### 07-use-storybook-actions-to-monitor-outputs
 
+Now let's add some actions. Actions allow us to hook into any of the component's and, Here we'll use them to check the values emitted by our outputs. We'll make it easy to reuse them by creating an object of our actions in `text.component.ts`.
+
+```ts
+export default {
+  ...
+  argTypes: {
+    // use actions to watch output events
+    updateText: { action: 'updateText' },
+    cancelEdit: { action: 'cancelEdit' },
+    startEdit: { action: 'startEdit' },
+  },
+  ...
+}
+```
+
+<!-- #### NOTE: Compodoc can be run with the following commands
 ```bash
-nx run <project-name>:storybook
-```
-
+// HTML Format
+nx run <project>:compodoc
+// JSON Format
+nx run <project>:compodoc:json
+``` -->
 
 
 ## Resources

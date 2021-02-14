@@ -17,7 +17,11 @@ export default {
         type: 'select',
         options: ['displaying', 'editing', 'updating']
       }
-    }
+    },
+    // use actions to watch output events
+    updateText: { action: 'updateText' },
+    cancelEdit: { action: 'cancelEdit' },
+    startEdit: { action: 'startEdit' },
   }
 }
 
