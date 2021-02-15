@@ -1,0 +1,40 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
+
+import { TextComponent } from './text.component.ts';
+
+<Meta title='Editable Text Component/MDX'component={TextComponent} />
+
+# Editable Text Component
+
+Some **markdown** description, or whatever you want
+
+## Visual States
+
+### displaying
+<Story name="basic" height="60px">
+  {{
+    component: TextComponent,
+    moduleMetadata: {
+      imports: [ReactiveFormsModule]
+    },
+    props: {
+      state: 'displaying',
+      textValue: 'Initial Value'
+    }
+  }}
+</Story>
+
+```html
+  <!-- example.component.html -->
+  <editable-text
+    [textValue]="'Initial Value'"
+    [state]="'displaying'"
+    (startEdit)="handleStartEdit()"
+    (cancelEdit)="handleCancelEdit()"
+    (updateText)="handleUpdateText($event)">
+  </editable-text>
+```
+## ArgsTable
+
+<ArgsTable of={TextComponent} />
