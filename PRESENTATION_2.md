@@ -231,6 +231,85 @@ export default {
 }
 ```
 
+### 08-template-usage
+
+If we like we can create a template for our story. This allows us to add `HTML` to story and even use multiple components together.
+
+```ts
+export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory => ({
+  // Module dependencies can be configured here
+  moduleMetadata: {
+    imports: [ReactiveFormsModule],
+    declarations: [TextComponent]
+  },
+  // Declare property values that should be duplicated across stories here
+  props: {
+    ...args
+  },
+  template: `
+    <h2>Displaying</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'displaying'"></editable-text>
+    <h2>Editing</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'editing'"></editable-text>
+    <h2>Updating</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'updating'"></editable-text>
+  `
+});
+```
+
+### 09-enhance-docs-with-mdx
+
+For even further customization of documentation we can use `mdx`. MDX is an authorable format that lets you seamlessly write JSX in your Markdown documents. Since each Storybook story is a React component, we can write documentation in Markdown and easily interweave our example stories in line. The Nx Storybook schematic we ran earlier configure the project to use `mdx` files so all we have to do is create a file `text.component.stories.mdx` and add the following.
+
+```mdx
+<!-- Import our dependancies for the stories -->
+import { ReactiveFormsModule } from '@angular/forms';
+import { TextComponent } from './text.component.ts';
+
+<!-- As well as some built in storybook components that we'll use in the documentation -->
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
+
+<!-- The meta component tells Storybook the title of the story and which component it's for -->
+<Meta title='Editable Text Component/MDX' component={TextComponent} />
+
+# Editable Text Component
+
+Some **markdown** description, or whatever you want
+
+## Visual States
+
+### displaying
+
+<!-- Configure the story using the Story component -->
+<Story name="basic" height="60px">
+  {{
+    component: TextComponent,
+    moduleMetadata: {
+      imports: [ReactiveFormsModule]
+    },
+    props: {
+      state: 'displaying',
+      textValue: 'Initial Value'
+    }
+  }}
+</Story>
+
+<!-- Use a code snippet to show users an example of usage -->
+```html
+  <!-- example.component.html -->
+  <editable-text
+    [textValue]="'Initial Value'"
+    [state]="'displaying'"
+    (startEdit)="handleStartEdit()"
+    (cancelEdit)="handleCancelEdit()"
+    (updateText)="handleUpdateText($event)">
+  </editable-text>
+```
+## ArgsTable
+<!-- Use the ArgTable component to display property definitions for component -->
+<ArgsTable of={TextComponent} />
+```
+
 <!-- #### NOTE: Compodoc can be run with the following commands
 ```bash
 // HTML Format

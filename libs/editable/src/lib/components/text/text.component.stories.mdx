@@ -1,9 +1,12 @@
+<!-- Import our dependancies for the stories -->
 import { ReactiveFormsModule } from '@angular/forms';
-import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
-
 import { TextComponent } from './text.component.ts';
 
-<Meta title='Editable Text Component/MDX'component={TextComponent} />
+<!-- As well as some built in storybook components that we'll use in the documentation -->
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
+
+<!-- The meta component tells Storybook the title of the story and which component it's for -->
+<Meta title='Editable Text Component/MDX' component={TextComponent} />
 
 # Editable Text Component
 
@@ -12,6 +15,8 @@ Some **markdown** description, or whatever you want
 ## Visual States
 
 ### displaying
+
+<!-- Configure the story using the Story component -->
 <Story name="basic" height="60px">
   {{
     component: TextComponent,
@@ -25,6 +30,7 @@ Some **markdown** description, or whatever you want
   }}
 </Story>
 
+<!-- Use a code snippet to show users an example of usage -->
 ```html
   <!-- example.component.html -->
   <editable-text
@@ -36,5 +42,5 @@ Some **markdown** description, or whatever you want
   </editable-text>
 ```
 ## ArgsTable
-
+<!-- Use the ArgTable component to display property definitions for component -->
 <ArgsTable of={TextComponent} />

@@ -41,7 +41,7 @@ const template: Story<TextComponent> = (args: TextComponent): IStory => ({
 });
 
 
-export const usage: Story<TextComponent> = (args: TextComponent): IStory => ({
+export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory => ({
   // Module dependencies can be configured here
   moduleMetadata: {
     imports: [ReactiveFormsModule],
@@ -52,7 +52,12 @@ export const usage: Story<TextComponent> = (args: TextComponent): IStory => ({
     ...args
   },
   template: `
+    <h2>Displaying</h2>
     <editable-text [textValue]="'initialValue'" [state]="'displaying'"></editable-text>
+    <h2>Editing</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'editing'"></editable-text>
+    <h2>Updating</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'updating'"></editable-text>
   `
 });
 
