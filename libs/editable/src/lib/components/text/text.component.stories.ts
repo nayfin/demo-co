@@ -40,6 +40,22 @@ const template: Story<TextComponent> = (args: TextComponent): IStory => ({
   }
 });
 
+
+export const usage: Story<TextComponent> = (args: TextComponent): IStory => ({
+  // Module dependencies can be configured here
+  moduleMetadata: {
+    imports: [ReactiveFormsModule],
+    declarations: [TextComponent]
+  },
+  // Declare property values that should be duplicated across stories here
+  props: {
+    ...args
+  },
+  template: `
+    <editable-text [textValue]="'initialValue'" [state]="'displaying'"></editable-text>
+  `
+});
+
 // story representing editing state
 export const editing = template.bind({});
 editing.args = {
