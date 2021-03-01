@@ -1,17 +1,71 @@
-# Part 2: Adding Documentation Using Storybook
+# Using Storybook and Nx to document component libraries
 
-## Setup Storybook
+###
 
-See [nx docs](https://nx.dev/latest/angular/plugins/storybook/overview) for more information.
+## Nx and Storybook Overview
 
-### 1) Add the Storybook plugin and addons to dev dependencies
+### Nx
 
+Nx is an extensible dev tool for monorepos. Find more information [here](https://nx.dev/). We're using it here because it will allow us to group multiple component libraries under a single repo, and to take advantage of some of it's plugins to configure our project for Storybook.
+
+### Storybook
+
+Storybook is a component development toolkit for React, Vue, Angular, Svelte and Ember. Storybook itself is designed to showcase components in isolation, but by integrating with other software (cypress, jest, compodoc, etc..) and developing useful addons, they are quickly building a platform to facilitate all stages of library development cycle:
+
+- development
+- testing
+- review
+- documentation
+- release
+
+## Storybook vs Demo app
+
+The most common method of developing/testing/showcasing/documenting components is to create a demo app and create an example for each of feature of each component.  There are pros and cons to each method.
+
+  ### Storybook
+
+  **Pros:**
+
+  - Isolated development, demos, unit  and e2e testing
+  - Easily capture different states of component
+  - Very fast onchange refreshes, and state is saved between onchange reloads
+  - Easily publish documentation for users, and demos for designers and stakeholders
+  - Markdown can be used for documentation and usage examples
+  - Lots of supported frameworks
+  - Evolving Rapidly: frequent release of new features
+
+  **Cons:**
+
+  - Controlling state of story is difficult, especially for Angular
+  - React focused: Docs aren't as fleshed out for Angular and some features don't work as seamlessly
+  - Evolving rapidly: frequent changes to API
+
+  ### Demo App
+
+  **Pros:**
+
+  - Good for showing examples of complex usage and composition of multiple components
+  - Can serve as example of Angular best practices for rest of organization
+  - Can verify that there are no issues with library after it is published
+
+  **Cons:**
+
+  - Lots of extra work creating structure, setting up routes, etc...
+  - Capturing all states is tedious and time consuming
+  - Difficult to provide meaningful documentation and usage examples
+
+## Walkthrough
+
+We'll go through setup and then implement some of Storybook's useful features. The heading of each step corresponds to a branch on the
+
+
+### 01-installs-storybook
+
+Add the Storybook plugin and addons to dev dependencies
 
 ```bash
 npm i -D @nrwl/storybook @storybook/essentials
 ```
-
-### 01-installs-storybook
 
 Run Nx storybook schematic
 
@@ -27,11 +81,11 @@ nx run <project-name>:storybook
 
 And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't provided it in the story's configuration.
 
+You can find more details on setup at [nx docs](https://nx.dev/latest/angular/plugins/storybook/overview).
 
 ### 02-import-required-modules
 
 So import `ReactiveFormsModule` in the story and add it to the `moduleMetadata` property of the `primary` story.
-
 
 ```ts
 // text.component.stories.ts
@@ -162,6 +216,14 @@ Configure new commands targets in `angular.json` file to :
 }
 ```
 
+#### NOTE: Compodoc can be run with the following commands
+```bash
+// HTML Format
+nx run <project>:compodoc
+// JSON Format
+nx run <project>:compodoc:json
+```
+
 And the last step is in the `text.component.stories.ts` file. We just need to assign a story to the default export.
 
 ```ts
@@ -261,7 +323,7 @@ export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory 
 
 For even further customization of documentation we can use `mdx`. MDX is an authorable format that lets you seamlessly write JSX in your Markdown documents. Since each Storybook story is a React component, we can write documentation in Markdown and easily interweave our example stories in line. The Nx Storybook schematic we ran earlier configure the project to use `mdx` files so all we have to do is create a file `text.component.stories.mdx` and add the following.
 
-```mdx
+```html
 <!-- Import our dependancies for the stories -->
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextComponent } from './text.component.ts';
@@ -294,29 +356,23 @@ Some **markdown** description, or whatever you want
   }}
 </Story>
 
-<!-- Use a code snippet to show users an example of usage -->
-```html
-  <!-- example.component.html -->
-  <editable-text
-    [textValue]="'Initial Value'"
-    [state]="'displaying'"
-    (startEdit)="handleStartEdit()"
-    (cancelEdit)="handleCancelEdit()"
-    (updateText)="handleUpdateText($event)">
-  </editable-text>
-```
+    <!-- Use a code snippet to show users an example of usage -->
+    ```html
+      <!-- example.component.html -->
+      <editable-text
+        [textValue]="'Initial Value'"
+        [state]="'displaying'"
+        (startEdit)="handleStartEdit()"
+        (cancelEdit)="handleCancelEdit()"
+        (updateText)="handleUpdateText($event)">
+      </editable-text>
+    ```
+
 ## ArgsTable
 <!-- Use the ArgTable component to display property definitions for component -->
 <ArgsTable of={TextComponent} />
 ```
 
-<!-- #### NOTE: Compodoc can be run with the following commands
-```bash
-// HTML Format
-nx run <project>:compodoc
-// JSON Format
-nx run <project>:compodoc:json
-``` -->
 
 
 ## Resources
