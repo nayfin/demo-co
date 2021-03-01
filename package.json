@@ -68,7 +68,7 @@
     "@nrwl/storybook": "^11.2.11",
     "@nrwl/tao": "11.2.6",
     "@nrwl/workspace": "11.2.6",
-    "@storybook/addon-essentials": "^6.1.17",
+    "@storybook/addon-docs": "^6.1.17",
     "@storybook/addon-knobs": "^6.1.11",
     "@storybook/angular": "^6.1.11",
     "@twittwer/compodoc": "^1.5.1",
