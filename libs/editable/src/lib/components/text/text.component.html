@@ -1,16 +1,20 @@
+<!-- view when editing -->
+<div *ngIf="uiState === 'editing'; else display">
+  <input type="text"
+    class="text-input"
+    [formControl]="control"
+    [readonly]=""
+    (keydown.enter)="initiateUpdateText()"
+    (keydown.tab)="initiateUpdateText()"
+    (keydown.esc)="this.cancelEdit.emit()"/>
+</div>
 
-  <div *ngIf="state === 'editing'; else display">
-    <input type="text"
-      class="text-input"
-      [formControl]="control"
-      [readonly]=""
-      (keydown.enter)="initiateUpdateText()"
-      (keydown.tab)="initiateUpdateText()"
-      (keydown.esc)="cancelUpdateText()"/>
-  </div>
-  <ng-template #display>
-    <p (click)="enableEditing()">
-      {{_textValue}}
-      <i *ngIf="state === 'displaying'" class="icon edit-icon"><img src="../../assets/edit.svg" alt="edit icon"></i>
-      <i *ngIf="state === 'updating'" class="icon loading-icon"><img src="../../assets/loading.svg" alt="loading icon"></i>    </p>
-  </ng-template>
+<!-- view when displaying or updating  -->
+<ng-template #display>
+  <p (click)="this.startEdit.emit()">
+    {{_textValue}}
+
+    <i *ngIf="uiState === 'displaying'" class="icon edit-icon"><img src="../../assets/edit.svg" alt="edit icon"></i>
+    <i *ngIf="uiState === 'updating'" class="icon loading-icon"><img src="../../assets/loading.svg" alt="loading icon"></i>
+  </p>
+</ng-template>

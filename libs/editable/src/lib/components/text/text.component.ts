@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 /**
  * The possible states of an Editable Component
  */
-export type EditableState = 'editing' | 'updating' | 'displaying';
+export type EditableUiState = 'editing' | 'updating' | 'displaying';
 
 /**
  * A Component that can be edited
- * @param state the state of the editable component: 'editing' | 'updating' | 'displaying'
+ * @param uiState the state of the editable component: 'editing' | 'updating' | 'displaying'
  */
 @Component({
   selector: 'editable-text',
@@ -20,7 +20,7 @@ export class TextComponent implements OnInit {
 
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
 
-  @Input() state: EditableState = 'editing';
+  @Input() uiState: EditableUiState = 'editing';
 
   _textValue = '';
   @Input() set textValue(value: string) {
@@ -45,13 +45,5 @@ export class TextComponent implements OnInit {
   initiateUpdateText() {
     const newValue = this.control.value;
     this.updateText.emit(newValue);
-  }
-
-  cancelUpdateText() {
-    this.cancelEdit.emit();
-  }
-
-  enableEditing() {
-    this.startEdit.emit();
   }
 }
