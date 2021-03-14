@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EditableState } from '@demo-co/editable';
+import { EditableUiState } from '@demo-co/editable';
 
 @Component({
   selector: 'demo-co-root',
@@ -8,23 +8,23 @@ import { EditableState } from '@demo-co/editable';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  editableState: EditableState = 'displaying'
+  editableUiState: EditableUiState = 'displaying';
   someText = 'Hank Venture';
   constructor(private http: HttpClient) {}
 
   handleStartEdit() {
-    this.editableState = 'editing';
+    this.editableUiState = 'editing';
   }
 
   handleUpdate(newValue: string) {
     this.someText = newValue;
-    this.editableState = 'updating';
+    this.editableUiState = 'updating';
     setTimeout(() => {
-      this.editableState = 'displaying';
+      this.editableUiState = 'displaying';
     }, 2000);
   }
 
   handleUpdateCancel() {
-    this.editableState = 'displaying'
+    this.editableUiState = 'displaying'
   }
 }
