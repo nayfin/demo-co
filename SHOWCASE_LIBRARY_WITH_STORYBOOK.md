@@ -102,76 +102,54 @@ export const primary = () => ({
 })
 ```
 
+### 03-constrain-knobs
+
 You'll notice the `knobs` generated in our story by the nx schematic. While these are great, currently they accept any string, which doesn't do much to convey the acceptable inputs to the user. So, let's refine them to constrain the knobs, this will keep invalid inputs from breaking the story and help convey valid inputs to the consumer
 
-We import the appropriate knobs:
 
-### 03-convert-to-templated-stories
-
-  Soon well replace the `knobs` with some `controls` but first let's just remove the `knobs` and create a template for our stories that we can use to represent different states. Replace entire `text.component.stories.ts` file with the following:
+Import the new knobs:
 
 ```ts
-import { ReactiveFormsModule } from '@angular/forms';
-import { IStory, Story } from '@storybook/angular';
-import { TextComponent } from './text.component';
+import { text, select, color } from '@storybook/addon-knobs';
 
-export default {
-  // The title in sidenav for our group of stories for this component
-  title: 'Editable Text Component'
-}
+```
 
-// A template we can reuse to easily create a new story to represent each state of our component
-const template: Story<TextComponent> = (args: TextComponent): IStory => ({
-  // The component the story represents
-  component: TextComponent,
-  // Module dependencies can be configured here
-  moduleMetadata: {
-    imports: [ReactiveFormsModule]
-  },
-  // Declare property values that should be duplicated across stories here
+Then update the props with the appropriate knob functions
+
+```ts
+
+export const primary = () => ({
+  ...
   props: {
-    textValue: 'initialValue',
-    ...args
+    backgroundColor: color('backgroundColor', `#D0B0DA`),
+    uiState: select('uiState', ['displaying','editing','updating'], 'editing'),
+    textValue: text('textValue', 'Initial Value'),
   }
-});
+})
 
-// story representing editing state
-export const editing = template.bind({});
-editing.args = {
-  state: 'editing',
-};
-
-// story representing editing state
-export const displaying = template.bind({});
-displaying.args = {
-  state: 'displaying',
-};
-
-// story representing editing state
-export const updating = template.bind({});
-updating.args = {
-  state: 'updating',
-};
 ```
 
-Now we have story to represent each state of our component. Next let's add the `essentials` addon and see what that gets us.
+### 04-use-storybook-actions-to-monitor-outputs
 
-### 04-add-storybook-essentials
+ Actions allow us to hook into any of the component's methods and monitor the arguments passed to them. Here we'll use them to check the values emitted by our outputs. Let's add some to our story.
 
-We already installed `@storybook/essentials` earlier, so we just need to update the configuration to use this API and we'll get a docs out of it for free.
-
-First, replace `knobs` addon with `essentials` in `<workspace-name>/.storybook/main.js`.
-
-```js
-module.exports = {
-  stories: [],
-  addons: [
-    "@storybook/addon-essentials"
-  ]
-};
+```ts
+  props: {
+    backgroundColor: color('backgroundColor', `#D0B0DA`),
+    uiState: select('uiState', ['displaying','editing','updating'], 'editing'),
+    textValue: text('textValue', 'Initial Value'),
+    updateText: action('updateText'),
+    cancelEdit: action('cancelEdit'),
+    startEdit: action('startEdit')
+  }
 ```
 
-Then, remove everything from `libs/<library-name>/.storybook/preview.js` but don't remove file, we'll need it later.
+TODO: This might be a good time to talk about the architecture of the component a little more. Explain why inputs drive the display and outputs don't change state, leaving the parent app to decide what to do with the outputs.
+
+
+### 05-add-cypress-test
+
+
 
 ### 05-enhance-docs-with-compodoc
 
@@ -267,47 +245,6 @@ export class TextComponent implements OnInit {
 }
 ```
 
-### 06-enhance-controls
-
-We have controls working, but let's refine the `controls` so that they only allow appropriate values. To do this we simply update the `default` export in `text.component.stories.ts` like so:
-
-```ts
-export default {
-  // The title in sidenav for our group of stories for this component
-  title: 'Editable Text Component',
-  // Connects the story to the generated docs
-  component: TextComponent,
-  // Refine Storybook controls here
-  argTypes: {
-    // use color picker to control backgroundColor input
-    backgroundColor: { control: 'color'},
-    // use select to control state input
-    state: {
-      control: {
-        type: 'select',
-        options: ['displaying', 'editing', 'updating']
-      }
-    }
-  }
-}
-```
-
-### 07-use-storybook-actions-to-monitor-outputs
-
-Now let's add some actions. Actions allow us to hook into any of the component's and, Here we'll use them to check the values emitted by our outputs. We'll make it easy to reuse them by creating an object of our actions in `text.component.ts`.
-
-```ts
-export default {
-  ...
-  argTypes: {
-    // use actions to watch output events
-    updateText: { action: 'updateText' },
-    cancelEdit: { action: 'cancelEdit' },
-    startEdit: { action: 'startEdit' },
-  },
-  ...
-}
-```
 
 ### 08-template-usage
 
@@ -390,6 +327,51 @@ Some **markdown** description, or whatever you want
 ```
 
 
+
+### bonus-abstracting-reusable-story
+```ts
+import { ReactiveFormsModule } from '@angular/forms';
+import { IStory, Story } from '@storybook/angular';
+import { TextComponent } from './text.component';
+
+export default {
+  // The title in sidenav for our group of stories for this component
+  title: 'Editable Text Component'
+}
+
+// A template we can reuse to easily create a new story to represent each state of our component
+const template: Story<TextComponent> = (args: TextComponent): IStory => ({
+  // The component the story represents
+  component: TextComponent,
+  // Module dependencies can be configured here
+  moduleMetadata: {
+    imports: [ReactiveFormsModule]
+  },
+  // Declare property values that should be duplicated across stories here
+  props: {
+    textValue: 'initialValue',
+    ...args
+  }
+});
+
+// story representing editing state
+export const editing = template.bind({});
+editing.args = {
+  state: 'editing',
+};
+
+// story representing editing state
+export const displaying = template.bind({});
+displaying.args = {
+  state: 'displaying',
+};
+
+// story representing editing state
+export const updating = template.bind({});
+updating.args = {
+  state: 'updating',
+};
+```
 
 ## Resources
 
