@@ -5,7 +5,10 @@ import { action } from '@storybook/addon-actions';
 import { TextComponent } from './text.component';
 
 export default {
-  title: 'TextComponent'
+  // The title in sidenav for our group of stories for this component
+  title: 'Editable Text Component',
+  // Connects the story to the generated docs
+  component: TextComponent
 }
 
 export const primary = () => ({

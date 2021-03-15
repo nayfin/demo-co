@@ -269,6 +269,18 @@
               "quiet": true
             }
           }
+        },
+        "compodoc": {
+          "builder": "@twittwer/compodoc:compodoc",
+          "options": {
+            "tsConfig": "libs\\editable\\tsconfig.lib.json",
+            "outputPath": "dist\\compodoc\\editable"
+          },
+          "configurations": {
+            "json": {
+              "exportFormat": "json"
+            }
+          }
         }
       }
     },

@@ -181,53 +181,16 @@ nx add @twittwer/compodoc
 nx g @twittwer/compodoc:config <project-name>
 ```
 
-#### NOTE: Compodoc can now be run with the following commands
+Add the docs addon in `.storybook/main.js`
 
-  ```bash
-  // HTML Format
-  nx run <project>:compodoc
-  // JSON Format
-  nx run <project>:compodoc:json
-  ```
-
-Configure new commands targets in `angular.json` file to :
-
-```json
-{
-  "projects": {
-    "<project-name>": {
-      "architect": {
-        "storybook": {
-          /* existing @nrwl/storybook config */
-        },
-        "build-storybook": {
-          /*  existing @nrwl/storybook config */
-        },
-        "compodoc": {
-          /* existing @twittwer/compodoc config */
-        },
-        "storydoc": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              "npx nx run <project>:compodoc:json --watch",
-              "npx nx run <project>:storybook"
-            ]
-          }
-        },
-        "build-storydoc": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              "npx nx run <project>:compodoc:json",
-              "npx nx run <project>:build-storybook"
-            ]
-          }
-        }
-      }
-    }
-  }
-}
+```js
+module.exports = {
+  stories: [],
+  addons: [
+    '@storybook/addon-docs',
+    ...
+  ],
+};
 ```
 
 Tell Storybook where to find the generated docs JSON in `.storybook/preview.js` file.
@@ -248,6 +211,16 @@ export default {
   // Connects the story to the generated docs
   component: TextComponent
 }
+```
+
+In one terminal generate the compodoc json
+```bash
+nx run <project>:compodoc:json --watch
+```
+
+In another terminal run storybook
+```bash
+nx run <project>:storybook
 ```
 
 Now we can add some comments to the properties of the `TextComponent` code and it will be reflected in our Storybook docs.
@@ -348,7 +321,47 @@ Some **markdown** description, or whatever you want
 ```
 
 
+### bonus-configure-docs-integrations
 
+Configure new commands targets in `angular.json` file:
+
+```json
+{
+  "projects": {
+    "<project-name>": {
+      "architect": {
+        "storybook": {
+          /* existing @nrwl/storybook config */
+        },
+        "build-storybook": {
+          /*  existing @nrwl/storybook config */
+        },
+        "compodoc": {
+          /* existing @twittwer/compodoc config */
+        },
+        "storydoc": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "npx nx run <project>:compodoc:json --watch",
+              "npx nx run <project>:storybook"
+            ]
+          }
+        },
+        "build-storydoc": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "npx nx run <project>:compodoc:json",
+              "npx nx run <project>:build-storybook"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
 ### bonus-abstracting-reusable-story
 ```ts
 import { ReactiveFormsModule } from '@angular/forms';

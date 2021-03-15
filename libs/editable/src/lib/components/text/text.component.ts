@@ -17,9 +17,13 @@ export type EditableUiState = 'editing' | 'updating' | 'displaying';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextComponent implements OnInit {
-
+  /**
+   * controls background color
+   */
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
-
+  /**
+   * controls the interactive state of the component
+   */
   @Input() uiState: EditableUiState = 'editing';
 
   _textValue = '';
