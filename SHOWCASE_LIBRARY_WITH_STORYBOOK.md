@@ -238,37 +238,11 @@ export class TextComponent implements OnInit {
   ...
 }
 ```
+### 07-enhance-docs-with-mdx
 
+MDX is a system for using `jsx` together with `markdown`, and it's a great way to embed our stories our documentation.
 
-### 08-template-usage
-
-If we like we can create a template for our story. This allows us to add `HTML` to story and even use multiple components together.
-
-```ts
-export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory => ({
-  // Module dependencies can be configured here
-  moduleMetadata: {
-    imports: [ReactiveFormsModule],
-    declarations: [TextComponent]
-  },
-  // Declare property values that should be duplicated across stories here
-  props: {
-    ...args
-  },
-  template: `
-    <h2>Displaying</h2>
-    <editable-text [textValue]="'initialValue'" [state]="'displaying'"></editable-text>
-    <h2>Editing</h2>
-    <editable-text [textValue]="'initialValue'" [state]="'editing'"></editable-text>
-    <h2>Updating</h2>
-    <editable-text [textValue]="'initialValue'" [state]="'updating'"></editable-text>
-  `
-});
-```
-
-### 09-enhance-docs-with-mdx
-
-For even further customization of documentation we can use `mdx`. MDX is an authorable format that lets you seamlessly write JSX in your Markdown documents. Since each Storybook story is a React component, we can write documentation in Markdown and easily interweave our example stories in line. The Nx Storybook schematic we ran earlier configure the project to use `mdx` files so all we have to do is create a file `text.component.stories.mdx` and add the following.
+The Nx Storybook schematic we ran earlier configured the project to use `mdx` files. So all we have to do is create a new file `text.component.stories.mdx` and add the following.
 
 ```html
 <!-- Import our dependancies for the stories -->
@@ -321,11 +295,39 @@ Some **markdown** description, or whatever you want
 ```
 
 
-### bonus-configure-docs-integrations
+### 08-template-usage
 
-Configure new commands targets in `angular.json` file:
+If we like we can create a template for our story. This allows us to add `HTML` to story and even use multiple components together.
+
+```ts
+export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory => ({
+  // Module dependencies can be configured here
+  moduleMetadata: {
+    imports: [ReactiveFormsModule],
+    declarations: [TextComponent]
+  },
+  // Declare property values that should be duplicated across stories here
+  props: {
+    ...args
+  },
+  template: `
+    <h2>Displaying</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'displaying'"></editable-text>
+    <h2>Editing</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'editing'"></editable-text>
+    <h2>Updating</h2>
+    <editable-text [textValue]="'initialValue'" [state]="'updating'"></editable-text>
+  `
+});
+```
+
+
+### 09-configure-docs-integrations
+
+Running two terminals to keep our storybook stories inline with our compodoc documentation isn't a great experience. Let's add an `nx run` command to our angular json.
 
 ```json
+// `angular.json`
 {
   "projects": {
     "<project-name>": {
@@ -362,7 +364,13 @@ Configure new commands targets in `angular.json` file:
   }
 }
 ```
-### bonus-abstracting-reusable-story
+
+Now we can run `nx run <project-name>:storydoc` to run in watch mode `nx run <project-name>:storydoc` to build storybook for deployment to a docs or showcase page.
+
+### 10-abstracting-reusable-story
+
+Copy pasting stories over and over isn't very dry. Below the `template` story isn't exported as a story, it acts a base for the `export`ed stories below it. This way we can easily showcase an example of our component in each of it's three ui states.
+
 ```ts
 import { ReactiveFormsModule } from '@angular/forms';
 import { IStory, Story } from '@storybook/angular';
