@@ -6,10 +6,6 @@ import { FormControl } from '@angular/forms';
  */
 export type EditableUiState = 'editing' | 'updating' | 'displaying';
 
-/**
- * A Component that can be edited
- * @param uiState the state of the editable component: 'editing' | 'updating' | 'displaying'
- */
 @Component({
   selector: 'editable-text',
   templateUrl: './text.component.html',
