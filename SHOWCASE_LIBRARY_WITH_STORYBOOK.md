@@ -244,7 +244,7 @@ MDX is a system for using `jsx` together with `markdown`, and it's a great way t
 
 The Nx Storybook schematic we ran earlier configured the project to use `mdx` files. So all we have to do is create a new file `text.component.stories.mdx` and add the following.
 
-```html
+````md
 <!-- Import our dependancies for the stories -->
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextComponent } from './text.component.ts';
@@ -277,22 +277,22 @@ Some **markdown** description, or whatever you want
   }}
 </Story>
 
-    <!-- Use a code snippet to show users an example of usage -->
-    ```html
-      <!-- example.component.html -->
-      <editable-text
-        [textValue]="'Initial Value'"
-        [state]="'displaying'"
-        (startEdit)="handleStartEdit()"
-        (cancelEdit)="handleCancelEdit()"
-        (updateText)="handleUpdateText($event)">
-      </editable-text>
-    ```
+<!-- Use a code snippet to show users an example of usage -->
+```html
+  <!-- example.component.html -->
+  <editable-text
+    [textValue]="'Initial Value'"
+    [state]="'displaying'"
+    (startEdit)="handleStartEdit()"
+    (cancelEdit)="handleCancelEdit()"
+    (updateText)="handleUpdateText($event)">
+  </editable-text>
+```
 
 ## ArgsTable
 <!-- Use the ArgTable component to display property definitions for component -->
 <ArgsTable of={TextComponent} />
-```
+````
 
 
 ### 08-template-usage
