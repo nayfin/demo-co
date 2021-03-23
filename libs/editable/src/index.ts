@@ -1,2 +1,3 @@
 export * from './lib/editable.module';
-export * from './lib/components/text/public_api';
+export * from './lib/components/public_api';
+export * from './lib/types/public_api';

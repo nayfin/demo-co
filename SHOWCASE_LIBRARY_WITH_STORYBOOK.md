@@ -146,7 +146,6 @@ export const primary = () => ({
 
 TODO: This might be a good time to talk about the architecture of the component a little more. Explain why inputs drive the display and outputs don't change state, leaving the parent app to decide what to do with the outputs.
 
-
 ### 05-run-cypress-test
 
 During the Storybook setup we opted to have the plugin setup up cypress for us. So it set up a project(`<project-name>-e2e`) in the `apps` folder configured to run against our stories, and stubbed out a basic test for us.
@@ -294,8 +293,14 @@ Some **markdown** description, or whatever you want
 <ArgsTable of={TextComponent} />
 ````
 
+### 08-generate-stories-for-new-component
 
-### 08-template-usage
+If you need to generate stories for new components in your library you can simply run:
+
+```bash
+nx generate @nrwl/angular:stories <project-name> --generateCypressSpecs
+```
+### 09-template-usage
 
 If we like we can create a template for our story. This allows us to add `HTML` to story and even use multiple components together.
 
@@ -322,7 +327,7 @@ export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory 
 ```
 
 
-### 09-configure-docs-integrations
+### 10-configure-docs-integrations
 
 Running two terminals to keep our storybook stories inline with our compodoc documentation isn't a great experience. Let's add an `nx run` command to our angular json.
 
@@ -367,7 +372,7 @@ Running two terminals to keep our storybook stories inline with our compodoc doc
 
 Now we can run `nx run <project-name>:storydoc` to run in watch mode `nx run <project-name>:storydoc` to build storybook for deployment to a docs or showcase page.
 
-### 10-abstracting-reusable-story
+### 11-abstracting-reusable-story
 
 Copy pasting stories over and over isn't very dry. Below the `template` story isn't exported as a story, it acts a base for the `export`ed stories below it. This way we can easily showcase an example of our component in each of it's three ui states.
 

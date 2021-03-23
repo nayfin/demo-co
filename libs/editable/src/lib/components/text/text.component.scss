@@ -7,16 +7,21 @@
     border-bottom: 1px solid grey;
     background: rgb(0 0 0 / 0%);
   }
-
-  .icon {
-    height: 1em;
-    width: 1em;
-    img {
+  .display {
+    display: flex;
+    p {
+      min-width: 150px;
+    }
+    .icon {
       height: 1em;
       width: 1em;
-    }
-    &.loading-icon img {
-      animation: spin 3s linear infinite;
+      img {
+        height: 1em;
+        width: 1em;
+      }
+      &.loading-icon img {
+        animation: spin 3s linear infinite;
+      }
     }
   }
 

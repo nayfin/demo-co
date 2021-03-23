@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { EditableUiState } from '../../types/ui-state';
 
 @Component({
   selector: 'editable-text',
