@@ -1,11 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-/**
- * The possible states of an Editable Component
- */
-export type EditableUiState = 'editing' | 'updating' | 'displaying';
-
 @Component({
   selector: 'editable-text',
   templateUrl: './text.component.html',
