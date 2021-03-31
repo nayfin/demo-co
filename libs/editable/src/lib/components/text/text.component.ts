@@ -16,7 +16,7 @@ export class TextComponent implements OnInit {
 
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
 
-  @Input() state: EditableUiState = 'editing';
+  @Input() uiState: EditableUiState = 'editing';
 
   _textValue = '';
   @Input() set textValue(value: string) {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EditableState } from '@demo-co/editable';
+import { EditableUiState } from '@demo-co/editable';
 
 @Component({
   selector: 'demo-co-root',
@@ -8,7 +8,7 @@ import { EditableState } from '@demo-co/editable';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  editableState: EditableState = 'displaying'
+  editableState: EditableUiState = 'displaying'
   someText = 'Hank Venture';
   constructor(private http: HttpClient) {}
 
