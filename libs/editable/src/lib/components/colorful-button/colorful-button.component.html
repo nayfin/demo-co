@@ -1,1 +1,3 @@
-<p>colorful-button works!</p>
+<button [style.background]="backgroundColor" [style.color]="labelColor" (click)="buttonClick.emit()">
+  {{label}}
+</button>
