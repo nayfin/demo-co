@@ -9,7 +9,7 @@ import { EditableUiState } from '@demo-co/editable';
 })
 export class AppComponent {
   editableState: EditableUiState = 'displaying'
-  someText = 'Hank Venture';
+  someText = 'Initial value';
   constructor(private http: HttpClient) {}
 
   handleStartEdit() {
