@@ -1,14 +1,23 @@
 :host {
   display: inline-flex;
+  width: 156px;
   input.text-input, p {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 156px;
+    height: 20px;
     margin: 0;
     font-family: monospace;
     border: 0;
-    border-bottom: 1px solid grey;
+    border-bottom: 3px solid grey;
     background: rgb(0 0 0 / 0%);
   }
 
   .icon {
+    position: absolute;
+    right: 2px;
+    top: 2px;
     height: 1em;
     width: 1em;
     img {
