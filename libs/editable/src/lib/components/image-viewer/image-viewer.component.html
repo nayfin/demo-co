@@ -2,11 +2,9 @@
   <img [src]="imageUrl" [alt]="imageDescription">
 </div>
 <div class="input-container">
-  <editable-text
+  <!-- <editable-text
     [textValue]="imageUrl"
-    [uiState]="urlInputState"
-    (startEdit)="onStartEdit()"
-    (cancelEdit)="onCancelEdit()"
+    [isUpdating]="true"
     (updateText)="onUpdateText($event)">
-  </editable-text>
+  </editable-text> -->
 </div>

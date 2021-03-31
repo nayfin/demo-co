@@ -1,6 +1,9 @@
 <editable-text
-  (startEdit)="handleStartEdit()"
   (updateText)="handleUpdate($event)"
-  (cancelEdit)="handleUpdateCancel()"
-  [state]="editableState" [textValue]="someText">
+  [isUpdating]="isUpdating"
+  [textValue]="someText">
 </editable-text>
+
+<!-- <editable-image-viewer>
+
+</editable-image-viewer> -->

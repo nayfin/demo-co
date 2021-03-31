@@ -16,7 +16,8 @@ export class TextComponent implements OnInit {
 
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
 
-  @Input() state: EditableUiState = 'editing';
+  @Input() isUpdating: boolean;
+  isEditing: boolean;
 
   _textValue = '';
   @Input() set textValue(value: string) {
@@ -49,6 +50,9 @@ export class TextComponent implements OnInit {
   }
 
   enableEditing() {
+    this.isEditing = true;
     this.startEdit.emit();
+    (this.textInput.nativeElement as HTMLInputElement).focus();
+    setTimeout(() => console.log(this.textInput), 1000);
   }
 }
