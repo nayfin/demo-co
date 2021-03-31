@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextModule } from './components/text/public_api';
-import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
+import { TextModule } from './components/text/text.module';
+import { ImageViewerModule } from './components';
 
 @NgModule({
   imports: [
     CommonModule,
     TextModule,
+    ImageViewerModule
   ],
   exports: [
-    TextModule
-  ],
-  declarations: [ImageViewerComponent]
+    TextModule,
+    ImageViewerModule
+  ]
 })
 export class EditableModule {}
