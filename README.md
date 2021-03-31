@@ -62,6 +62,8 @@ We'll go through setup and then implement some of Storybook's useful features. T
 
 We are going to be working with a component library called `editable`. It's designed to facilitate inline editing of documents, similar to updating a single field in a JIRA ticket. Right now there is only a single component, but we'll add Storybook now. We want to make sure we are documenting these components as we build them to help ensure adoption in our organization.
 
+When you follow this guide with your own project, substitute your project's name for `editable` in all of the bash commands.
+
 ### 01-installs-storybook
 
 Add the Storybook plugin and addons to dev dependencies
@@ -74,50 +76,50 @@ npm i -D @nrwl/storybook @storybook/addon-actions @storybook/addon-docs
 Run Nx storybook schematic (~1 min)
 
 ```bash
-nx g @nrwl/angular:storybook-configuration <project-name>
+nx g @nrwl/angular:storybook-configuration editable
 ```
 
 Now run storybook
 
 ```bash
-nx run <project-name>:storybook
+nx run editable:storybook
 ```
 
-And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't provided it in the story's configuration.
-
-You can find more details on setup at [nx docs](https://nx.dev/latest/angular/plugins/storybook/overview).
+And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't imported or added it to the story's configuration. We'll fix it in the next step.
 
 ### 02-import-required-modules
 
-So import `ReactiveFormsModule` in the story and add it to the `moduleMetadata` property of the `primary` story.
+So our stories are going to build our components for us, and to do the story is going to need anything the component needs. Fortunately, in this library each component has its own module that packages up any dependencies and make them easy to import and configure for our story. We simply import `TextModule` and add it to the `imports` array in the `moduleMetadata` object.
+
+`text.component.stories.ts`
 
 ```ts
-// text.component.stories.ts
+import { TextModule } from './text.module';
+
 export const primary = () => ({
   moduleMetadata: {
     imports: [
-      ReactiveFormsModule
+      TextModule
     ]
   }
 })
 ```
 
+> The `moduleMetadata` is configured much like an Angular module, you can pass `declarations` and `providers` arrays here as well.
+
 ### 03-constrain-knobs
 
 You'll notice the `knobs` generated in our story by the nx schematic. While these are great, currently they accept any string, which doesn't do much to convey the acceptable inputs to the user. So, let's refine them to constrain the knobs, this will keep invalid inputs from breaking the story and help convey valid inputs to the consumer
-
 
 Import the new knobs:
 
 ```ts
 import { text, select, color } from '@storybook/addon-knobs';
-
 ```
 
 Then update the props with the appropriate knob functions
 
 ```ts
-
 export const primary = () => ({
   ...
   props: {
@@ -131,24 +133,44 @@ export const primary = () => ({
 
 ### 04-use-storybook-actions-to-monitor-outputs
 
- Actions allow us to hook into any of the component's methods and monitor the arguments passed to them. Here we'll use them to check the values emitted by our outputs. Let's add some to our story.
+Actions allow us to hook into any of the component's methods and monitor the arguments passed to them. Here we'll use them to check the values emitted by our outputs. Let's add some to our story.
+
+First, we need to configure Storybook to use the actions addon in the main configuration file `.storybook/main.js`.
+
+```js
+module.exports = {
+  stories: [],
+  addons: [
+    '@storybook/addon-actions',
+    '@storybook/addon-knobs/register',
+  ],
+};
+```
+
+Then we update our story (file `libs/editable/src/lib/components/text/text.component.stories.ts`) by importing the `action` function from Storybook at the top of the file
+
+```ts
+import { action } from '@storybook/addon-actions';
+```
+
+And updating our props to use the action
 
 ```ts
   props: {
-    backgroundColor: color('backgroundColor', `#D0B0DA`),
-    uiState: select('uiState', ['displaying','editing','updating'], 'editing'),
-    textValue: text('textValue', 'Initial Value'),
+    ...
     updateText: action('updateText'),
     cancelEdit: action('cancelEdit'),
     startEdit: action('startEdit')
   }
 ```
 
+Now if we check our story in the browser, we'll see a new tab `actions` next to our `knobs` tab
+
 TODO: This might be a good time to talk about the architecture of the component a little more. Explain why inputs drive the display and outputs don't change state, leaving the parent app to decide what to do with the outputs.
 
 ### 05-run-cypress-test
 
-During the Storybook setup we opted to have the plugin setup up cypress for us. So it set up a project(`<project-name>-e2e`) in the `apps` folder configured to run against our stories, and stubbed out a basic test for us.
+During the Storybook setup we opted to have the plugin setup up cypress for us. So it set up an e2e project(`editable-e2e`) in the `apps` folder configured to run against our stories, and it stubbed out a basic test for the editable story that was generated.
 
 `apps/editable-e2e/src/integration/text.component.ts`
 
@@ -163,11 +185,24 @@ describe('editable', () => {
 
 ```
 
-Let's add a test to check the background color of the component.
+We run the test in watch mode with:
+
+```bash
+nx run editable-e2e:e2e --watch
+```
+
+Now look closely at the URL in `cy.visit` call above. You might notice that the `id` query param has a value that corresponds to the name of the component and the story representing it (`id=textcomponent--primary`). The following query params correspond to the names of the knobs generated for our story (e.g `&knob-uiState=displaying`). We can use these query params to drive the knobs during our tests.
+
+Let's update the `textValue` param to have a value of `hello-world`
+
+```ts
+  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-uiState=displaying&knob-textValue=hello-world'));
+```
+// TODO: update test to assert that component is displaying 'hello-world'
 
 ```ts
   it('should render the component with correct background-color', () => {
-    cy.get('editable-text').should('have.css', 'background-color', 'rgb(208, 176, 218)');
+    cy.get('editable-text').should()
   });
 ```
 
@@ -177,7 +212,7 @@ Compodoc is a great tool for auto-generating docs. We can leverage its output he
 
 ```bash
 nx add @twittwer/compodoc
-nx g @twittwer/compodoc:config <project-name>
+nx g @twittwer/compodoc:config editable
 ```
 
 Add the docs addon in `.storybook/main.js`
@@ -214,12 +249,12 @@ export default {
 
 In one terminal generate the compodoc json
 ```bash
-nx run <project>:compodoc:json --watch
+nx run editable:compodoc:json --watch
 ```
 
 In another terminal run storybook
 ```bash
-nx run <project>:storybook
+nx run editable:storybook
 ```
 
 Now we can add some comments to the properties of the `TextComponent` code and it will be reflected in our Storybook docs.
@@ -277,15 +312,15 @@ Some **markdown** description, or whatever you want
 </Story>
 
 <!-- Use a code snippet to show users an example of usage -->
+### Usage
 ```html
-  <!-- example.component.html -->
-  <editable-text
-    [textValue]="'Initial Value'"
-    [state]="'displaying'"
-    (startEdit)="handleStartEdit()"
-    (cancelEdit)="handleCancelEdit()"
-    (updateText)="handleUpdateText($event)">
-  </editable-text>
+<editable-text
+  [textValue]="'Initial Value'"
+  [state]="'displaying'"
+  (startEdit)="handleStartEdit()"
+  (cancelEdit)="handleCancelEdit()"
+  (updateText)="handleUpdateText($event)">
+</editable-text>
 ```
 
 ## ArgsTable
@@ -298,8 +333,9 @@ Some **markdown** description, or whatever you want
 If you need to generate stories for new components in your library you can simply run:
 
 ```bash
-nx generate @nrwl/angular:stories <project-name> --generateCypressSpecs
+nx generate @nrwl/angular:stories editable --generateCypressSpecs
 ```
+
 ### 09-template-usage
 
 If we like we can create a template for our story. This allows us to add `HTML` to story and even use multiple components together.
@@ -326,7 +362,6 @@ export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory 
 });
 ```
 
-
 ### 10-configure-docs-integrations
 
 Running two terminals to keep our storybook stories inline with our compodoc documentation isn't a great experience. Let's add an `nx run` command to our angular json.
@@ -335,7 +370,7 @@ Running two terminals to keep our storybook stories inline with our compodoc doc
 // `angular.json`
 {
   "projects": {
-    "<project-name>": {
+    "editable": {
       "architect": {
         "storybook": {
           /* existing @nrwl/storybook config */
@@ -350,8 +385,8 @@ Running two terminals to keep our storybook stories inline with our compodoc doc
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "npx nx run <project>:compodoc:json --watch",
-              "npx nx run <project>:storybook"
+              "npx nx run editable:compodoc:json --watch",
+              "npx nx run editable:storybook"
             ]
           }
         },
@@ -359,8 +394,8 @@ Running two terminals to keep our storybook stories inline with our compodoc doc
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "npx nx run <project>:compodoc:json",
-              "npx nx run <project>:build-storybook"
+              "npx nx run editable:compodoc:json",
+              "npx nx run editable:build-storybook"
             ]
           }
         }
@@ -370,7 +405,7 @@ Running two terminals to keep our storybook stories inline with our compodoc doc
 }
 ```
 
-Now we can run `nx run <project-name>:storydoc` to run in watch mode `nx run <project-name>:storydoc` to build storybook for deployment to a docs or showcase page.
+Now we can run `nx run editable:storydoc` to run in watch mode `nx run editable:storydoc` to build storybook for deployment to a docs or showcase page.
 
 ### 11-abstracting-reusable-story
 
