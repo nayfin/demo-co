@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextModule } from './components/text/text.module';
-import { ColorfulButtonModule, ImageViewerModule } from './components';
+import { ColorfulButtonModule, ImageViewerModule, PaginatorModule, TextModule } from './components';
 
 @NgModule({
   imports: [
     CommonModule,
     TextModule,
     ImageViewerModule,
-    ColorfulButtonModule
+    ColorfulButtonModule,
+    PaginatorModule
   ],
   exports: [
     TextModule,
     ImageViewerModule,
-    ColorfulButtonModule
+    ColorfulButtonModule,
+    PaginatorModule
   ]
 })
 export class EditableModule {}
