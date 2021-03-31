@@ -19,5 +19,9 @@
       "@demo-co/editable": ["libs/editable/src/index.ts"]
     }
   },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true
+  }
   "exclude": ["node_modules", "tmp"]
 }
