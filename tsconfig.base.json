@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@demo-co/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "demo-co": ["libs/demo-library/src/index.ts"]
+      "@demo-co/demo-library": ["libs/demo-library/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -10,4 +10,8 @@ import { Message } from '@demo-co/api-interfaces';
 export class AppComponent {
   hello$ = this.http.get<Message>('/api/hello');
   constructor(private http: HttpClient) {}
+
+  log(val: any) {
+    console.log({val})
+  }
 }
