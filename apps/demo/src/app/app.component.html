@@ -1,13 +1,14 @@
 <editable-text
-  (startEdit)="handleStartEdit()"
   (updateText)="handleUpdate($event)"
-  (cancelEdit)="handleUpdateCancel()"
-  [uiState]="editableState" [textValue]="someText">
+  [isUpdating]="isUpdating"
+  [textValue]="someText">
 </editable-text>
 <hr>
 
-<editable-paginator [currentPage]="8">
+<editable-paginator
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (decrement)="decrementPage()"
+  (increment)="incrementPage()">
 
 </editable-paginator>
-
-
