@@ -1,7 +1,7 @@
-<button (click)="decrement.emit()">
-  BACK
+<button class="back" [disabled]="currentPage < 1" (click)="decrement.emit()">
+  &lsaquo;
 </button>
-<span>CURRENT PAGE: {{ currentPage }}</span>
-<button (click)="increment.emit()">
-  FORWARD
+<span class="current-page">{{ currentPage }}</span>
+<button class="forward" [disabled]="currentPage >= totalPages" (click)="increment.emit()">
+  &rsaquo;
 </button>
