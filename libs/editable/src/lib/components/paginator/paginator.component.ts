@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class PaginatorComponent {
   @Input() totalPages: number;
   @Input() currentPage: number;
-
+  @Input() size: 'sm' | 'med' | 'lg'
   @Output() increment = new EventEmitter();
   @Output() decrement = new EventEmitter();
 }
