@@ -198,12 +198,20 @@ Let's update the `textValue` param to have a value of `hello-world`
 ```ts
   beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-uiState=displaying&knob-textValue=hello-world'));
 ```
-// TODO: update test to assert that component is displaying 'hello-world'
+
+TODO: Write test to assert initial value of text blah bla
 
 ```ts
-  it('should render the component with correct background-color', () => {
-    cy.get('editable-text').should()
+describe('editable', () => {
+  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-isUpdating&knob-textValue=initial-value'));
+
+  it('should render the component', () => {
+    cy.get('editable-text')
+      .should('exist')
+      .should('contain', 'initial-value');
   });
+});
+
 ```
 
 ### 06-generate-docs-with-compodoc
