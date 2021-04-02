@@ -8,7 +8,9 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextComponent implements OnInit {
-
+  /**
+   * a background color prop
+   */
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
 
   @Input() isUpdating: boolean;
