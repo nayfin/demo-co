@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { DataStatus } from '../../models';
 
 @Component({
   selector: 'editable-text',
@@ -10,7 +11,8 @@ import { FormControl } from '@angular/forms';
 export class TextComponent implements OnInit {
 
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
-  @Input() dataStatus: 'updating' | 'saved';
+
+  @Input() dataStatus: DataStatus = 'saved';
   isEditing: boolean;
 
   _textValue = '';

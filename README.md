@@ -85,7 +85,7 @@ Now run storybook
 nx run editable:storybook
 ```
 
-And we get an error, but this expected as our component depends on the `ReactiveFormsModule` and we haven't imported or added it to the story's configuration. We'll fix it in the next step.
+And we get an error, but this expected as our component has some dependencies, and we haven't added it them to the story's configuration. We'll fix that in the next step.
 
 ### 02-import-required-modules
 
@@ -124,8 +124,8 @@ export const primary = () => ({
   ...
   props: {
     backgroundColor: color('backgroundColor', `#D0B0DA`),
-    uiState: select('uiState', ['displaying','editing','updating'], 'editing'),
-    textValue: text('textValue', 'Initial Value'),
+    dataStatus: select('dataStatus', ['saved', 'updating'], 'saved'),
+    textValue: text('textValue', ''),
   }
 })
 
@@ -158,15 +158,11 @@ And updating our props to use the action
 ```ts
   props: {
     ...
-    updateText: action('updateText'),
-    cancelEdit: action('cancelEdit'),
-    startEdit: action('startEdit')
+    updateText: action('updateText')
   }
 ```
 
-Now if we check our story in the browser, we'll see a new tab `actions` next to our `knobs` tab
-
-TODO: This might be a good time to talk about the architecture of the component a little more. Explain why inputs drive the display and outputs don't change state, leaving the parent app to decide what to do with the outputs.
+Now if we check our story in the browser, we'll see a new tab `actions` next to our `knobs` tab.
 
 ### 05-run-cypress-test
 
@@ -176,7 +172,7 @@ During the Storybook setup we opted to have the plugin setup up cypress for us. 
 
 ```ts
 describe('editable', () => {
-  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-uiState=displaying&knob-textValue'));
+  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-dataStatus=saved&knob-textValue'));
 
   it('should render the component with correct background-color', () => {
     cy.get('editable-text').should('exist')
@@ -191,12 +187,12 @@ We run the test in watch mode with:
 nx run editable-e2e:e2e --watch
 ```
 
-Now look closely at the URL in `cy.visit` call above. You might notice that the `id` query param has a value that corresponds to the name of the component and the story representing it (`id=textcomponent--primary`). The following query params correspond to the names of the knobs generated for our story (e.g `&knob-uiState=displaying`). We can use these query params to drive the knobs during our tests.
+Now look closely at the URL in `cy.visit` call above. You might notice that the `id` query param has a value that corresponds to the name of the component and the story representing it (`id=textcomponent--primary`). The following query params correspond to the names of the knobs generated for our story (e.g `&knob-dataStatus=saved`). We can use these query params to drive the knobs during our tests.
 
 Let's update the `textValue` param in the url to have a value of `hello-world`:
 
 ```ts
-  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-uiState=displaying&knob-textValue=hello-world'));
+  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-dataStatus=saved&knob-textValue=hello-world'));
 ```
 
 Then modify our test to assert that our component contains that initial value.
@@ -270,9 +266,9 @@ export class TextComponent implements OnInit {
    */
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
   /**
-   * Controls interactive state of control
+   * Controls UI indicator for the status of the input data
    */
-  @Input() state: EditableState = 'editing';
+  @Input() dataStatus: DataStatus = 'saved';
   ...
 }
 ```
@@ -306,7 +302,7 @@ Some **markdown** description, or whatever you want
   {{
     component: TextComponent,
     moduleMetadata: {
-      imports: [ReactiveFormsModule]
+      imports: [TextModule]
     },
     props: {
       state: 'displaying',
@@ -348,7 +344,7 @@ If we like we can create a template for our story. This allows us to add `HTML` 
 export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory => ({
   // Module dependencies can be configured here
   moduleMetadata: {
-    imports: [ReactiveFormsModule],
+    imports: [TextModule],
     declarations: [TextComponent]
   },
   // Declare property values that should be duplicated across stories here
@@ -416,7 +412,7 @@ Now we can run `nx run editable:storydoc` to run in watch mode `nx run editable:
 Copy pasting stories over and over isn't very dry. Below the `template` story isn't exported as a story, it acts a base for the `export`ed stories below it. This way we can easily showcase an example of our component in each of it's three ui states.
 
 ```ts
-import { ReactiveFormsModule } from '@angular/forms';
+import { TextModule } from '@angular/forms';
 import { IStory, Story } from '@storybook/angular';
 import { TextComponent } from './text.component';
 
@@ -431,7 +427,7 @@ const template: Story<TextComponent> = (args: TextComponent): IStory => ({
   component: TextComponent,
   // Module dependencies can be configured here
   moduleMetadata: {
-    imports: [ReactiveFormsModule]
+    imports: [TextModule]
   },
   // Declare property values that should be duplicated across stories here
   props: {
