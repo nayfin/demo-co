@@ -22,37 +22,37 @@ Storybook is a component development toolkit for React, Vue, Angular, Svelte and
 
 The most common method of developing/testing/showcasing/documenting components is to create a demo app and create an example for each of feature of each component.  There are pros and cons to each method.
 
-  ### Storybook
+### Storybook
 
-  **Pros:**
+**Pros:**
 
-  - Isolated development, demos, unit  and e2e testing
-  - Easily capture different states of component
-  - Very fast onchange refreshes, and state is saved between onchange reloads
-  - Easily publish documentation for users, and demos for designers and stakeholders
-  - Markdown can be used for documentation and usage examples
-  - Lots of supported frameworks
-  - Evolving Rapidly: frequent release of new features
+- Isolated development, demos, unit  and e2e testing
+- Easily capture different states of component
+- Very fast onchange refreshes, and state is saved between onchange reloads
+- Easily publish documentation for users, and demos for designers and stakeholders
+- Markdown can be used for documentation and usage examples
+- Lots of supported frameworks
+- Evolving Rapidly: frequent release of new features
 
-  **Cons:**
+**Cons:**
 
-  - Controlling state of story is difficult, especially for Angular
-  - React focused: Docs aren't as fleshed out for Angular and some features don't work as seamlessly
-  - Evolving rapidly: frequent changes to API
+- Controlling state of story is difficult, especially for Angular
+- React focused: Docs aren't as fleshed out for Angular and some features don't work as seamlessly
+- Evolving rapidly: frequent changes to API
 
-  ### Demo App
+### Demo App
 
-  **Pros:**
+**Pros:**
 
-  - Good for showing examples of complex usage and composition of multiple components
-  - Can serve as example of Angular best practices for rest of organization
-  - Can verify that there are no issues with library after it is published
+- Good for showing examples of complex usage and composition of multiple components
+- Can serve as example of Angular best practices for rest of organization
+- Can verify that there are no issues with library after it is published
 
-  **Cons:**
+**Cons:**
 
-  - Lots of extra work creating structure, setting up routes, etc...
-  - Capturing all states is tedious and time consuming
-  - Difficult to provide meaningful documentation and usage examples
+- Lots of extra work creating structure, setting up routes, etc...
+- Capturing all states is tedious and time consuming
+- Difficult to provide meaningful documentation and usage examples
 
 ## Walkthrough
 
@@ -67,7 +67,6 @@ When you follow this guide with your own project, substitute your project's name
 ### 01-installs-storybook
 
 Add the Storybook plugin and addons to dev dependencies
-
 
 ```bash
 npm i -D @nrwl/storybook @storybook/addon-actions @storybook/addon-docs
