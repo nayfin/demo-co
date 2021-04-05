@@ -10,8 +10,7 @@ import { FormControl } from '@angular/forms';
 export class TextComponent implements OnInit {
 
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
-
-  @Input() isUpdating: boolean;
+  @Input() dataStatus: 'updating' | 'saved';
   isEditing: boolean;
 
   _textValue = '';

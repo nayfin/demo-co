@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataStatus } from '@demo-co/editable';
 
 @Component({
   selector: 'demo-co-root',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  isUpdating = false;
+  status: DataStatus = 'saved';
   someText = 'Initial Value';
 
   currentPage = 0;
@@ -14,9 +15,9 @@ export class AppComponent {
 
   handleUpdate(newValue: string) {
     this.someText = newValue;
-    this.isUpdating = true;
+    this.status = 'updating';
     setTimeout(() => {
-      this.isUpdating = false;
+      this.status = 'saved';
     }, 2000);
   }
 

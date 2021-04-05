@@ -193,26 +193,23 @@ nx run editable-e2e:e2e --watch
 
 Now look closely at the URL in `cy.visit` call above. You might notice that the `id` query param has a value that corresponds to the name of the component and the story representing it (`id=textcomponent--primary`). The following query params correspond to the names of the knobs generated for our story (e.g `&knob-uiState=displaying`). We can use these query params to drive the knobs during our tests.
 
-Let's update the `textValue` param to have a value of `hello-world`
+Let's update the `textValue` param in the url to have a value of `hello-world`:
 
 ```ts
   beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-uiState=displaying&knob-textValue=hello-world'));
 ```
 
-TODO: Write test to assert initial value of text blah bla
+Then modify our test to assert that our component contains that initial value.
 
 ```ts
-describe('editable', () => {
-  beforeEach(() => cy.visit('/iframe.html?id=textcomponent--primary&knob-backgroundColor&knob-isUpdating&knob-textValue=initial-value'));
-
-  it('should render the component', () => {
-    cy.get('editable-text')
-      .should('exist')
-      .should('contain', 'initial-value');
-  });
+it('should render the component', () => {
+  cy.get('editable-text')
+    .should('exist')
+    .should('contain', 'initial-value');
 });
-
 ```
+
+And with very little work we are able to test that our inputs update the UI as expected.
 
 ### 06-generate-docs-with-compodoc
 
@@ -248,8 +245,7 @@ And the last step is in the `text.component.stories.ts` file. We just need to as
 
 ```ts
 export default {
-  // The title in sidenav for our group of stories for this component
-  title: 'Editable Text Component',
+  ...
   // Connects the story to the generated docs
   component: TextComponent
 }
@@ -288,8 +284,8 @@ The Nx Storybook schematic we ran earlier configured the project to use `mdx` fi
 
 ````md
 <!-- Import our dependancies for the stories -->
-import { ReactiveFormsModule } from '@angular/forms';
-import { TextComponent } from './text.component.ts';
+import { TextModule } from './text.module';
+import { TextComponent } from './text.component';
 
 <!-- As well as some built in storybook components that we'll use in the documentation -->
 import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';

@@ -1,8 +1,9 @@
 <editable-text
   (updateText)="handleUpdate($event)"
-  [isUpdating]="isUpdating"
+  [dataStatus]="status"
   [textValue]="someText">
 </editable-text>
+
 <hr>
 
 <editable-paginator
@@ -10,5 +11,4 @@
   [totalPages]="totalPages"
   (decrement)="decrementPage()"
   (increment)="incrementPage()">
-
 </editable-paginator>
