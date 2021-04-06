@@ -35,17 +35,23 @@ We'll go through setup and then implement some of Storybook's useful features. T
 
 ### 00-editable-library
 
-We are going to be working with a component library called `editable`. It's designed to facilitate inline editing of documents, similar to updating a single field in a JIRA ticket. Right now there is only two components, but by adding Storybook early we can showcase and document our library as we build it. It's not much work to add it to our development process and keeping our demos, and docs current will increase adoption in our organization or target market.
+We are going to be working with a component library called `editable`. It's designed to facilitate inline editing of documents, similar to updating a single field in a JIRA ticket. Right now there are only two components, but by adding Storybook early we can showcase and document our library as we build it. It's not much work to add it to our development process, and keeping our demos and docs current will increase adoption in our organization or target market.
 
-Let's start by cloning the repo
+Let's clone the repo
 
 `git clone https://github.com/nayfin/demo-co.git`
 
+Move into the new directory
 
-And checking out the starting branch
+`cd demo-co`
+
+Check out the starting branch
 
 `git checkout 00-editable-library`
 
+Then install dependencies
+
+`npm i`
 
 >When you follow this guide on your own project, substitute your project's name for `editable` in all of the bash commands.
 
