@@ -23,9 +23,13 @@
     img {
       height: 1em;
       width: 1em;
-    }
-    &.loading-icon img {
-      animation: spin 3s linear infinite;
+      img {
+        height: 1em;
+        width: 1em;
+      }
+      &.loading-icon img {
+        animation: spin 3s linear infinite;
+      }
     }
   }
 

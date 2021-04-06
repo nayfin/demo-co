@@ -1,22 +1,21 @@
-
-  <div *ngIf="isEditing; else display">
-    <input type="text"
-      class="text-input"
-      editableFocusAfterViewInit
-      [formControl]="control"
-      [readonly]=""
-      (keydown.enter)="initiateUpdateText()"
-      (keydown.tab)="initiateUpdateText()"
-      (keydown.esc)="cancelUpdateText()"
-      (blur)="cancelUpdateText()"
-      #textInput/>
-  </div>
-  <ng-template #display>
-    <p (click)="enableEditing()">
-      {{_textValue}}
-      <i *ngIf="dataStatus === 'saved'; else updating" class="icon edit-icon"><img src="../../assets/edit.svg" alt="edit icon"></i>
-      <ng-template #updating>
-        <i class="icon loading-icon"><img src="../../assets/loading.svg" alt="loading icon"></i>
-      </ng-template>
-    </p>
-  </ng-template>
+<div *ngIf="isEditing; else display">
+  <input type="text"
+    class="text-input"
+    editableFocusAfterViewInit
+    [formControl]="control"
+    [readonly]=""
+    (keydown.enter)="initiateUpdateText()"
+    (keydown.tab)="initiateUpdateText()"
+    (keydown.esc)="cancelUpdateText()"
+    (blur)="cancelUpdateText()"
+    #textInput/>
+</div>
+<ng-template #display>
+  <p (click)="enableEditing()">
+    {{_textValue}}
+    <i *ngIf="dataStatus === 'saved'; else updating" class="icon edit-icon"><img src="../../assets/edit.svg" alt="edit icon"></i>
+    <ng-template #updating>
+      <i class="icon loading-icon"><img src="../../assets/loading.svg" alt="loading icon"></i>
+    </ng-template>
+  </p>
+</ng-template>
