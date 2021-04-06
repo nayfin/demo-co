@@ -215,10 +215,12 @@ module.exports = {
 Tell Storybook where to find the generated docs JSON in `.storybook/preview.js` file.
 
 ```js
+...
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import compodocJson from '../../../dist/compodoc/editable/documentation.json';
 
 setCompodocJson(compodocJson);
+...
 ```
 
 And the last step is in the `text.component.stories.ts` file. We just need to assign a story to the default export.
@@ -289,7 +291,7 @@ Some **markdown** description, or whatever you want
       imports: [TextModule]
     },
     props: {
-      state: 'displaying',
+      dataStatus: 'saved',
       textValue: 'Initial Value'
     }
   }}
