@@ -4,55 +4,30 @@
 
 ## Nx and Storybook Overview
 
+We have built a small component library, but no one knows how to use it. We need a way to showcase our library to our users that:
+
+- has working examples
+- demonstrates the API
+- generates docs from our comments
+- displays code usage examples
+
+It would be great if we could get all this without having to create a demo app and with all the structure that comes along with that.
+
+### Meet Storybook
+
+Storybook is a component development toolkit for React, Vue, Angular, Svelte and Ember. Storybook itself is a component showcase, but by integrating with other software (cypress, jest, compodoc, etc..) they are quickly building a platform that is incredibly useful for development, testing, review, release, and documentation. As we work through this workshop we'll be able to get all the features listed above and more.
+
 ### Nx
 
-Nx is an extensible dev tool for monorepos. Find more information [here](https://nx.dev/). We're using it here because it will allow us to group multiple component libraries under a single repo, and to take advantage of some of it's plugins to configure our project for Storybook.
+Nx is an extensible dev tool for monorepos. It's great for organizing multiples apps and libraries into a single repo, as well as publishing libraries. You can learn more about Nx [here](https://nx.dev/).
 
-### Storybook
+We're using Nx here to take advantage of its plugins. Without writing any code we'll be able to:
 
-Storybook is a component development toolkit for React, Vue, Angular, Svelte and Ember. Storybook itself is designed to showcase components in isolation, but by integrating with other software (cypress, jest, compodoc, etc..) and developing useful addons, they are quickly building a platform to facilitate all stages of library development cycle:
-
-- development
-- testing
-- review
-- documentation
-- release
-
-## Storybook vs Demo app
-
-The most common method of developing/testing/showcasing/documenting components is to create a demo app and create an example for each of feature of each component.  There are pros and cons to each method.
-
-### Storybook
-
-**Pros:**
-
-- Isolated development, demos, unit  and e2e testing
-- Easily capture different states of component
-- Very fast onchange refreshes, and state is saved between onchange reloads
-- Easily publish documentation for users, and demos for designers and stakeholders
-- Markdown can be used for documentation and usage examples
-- Lots of supported frameworks
-- Evolving Rapidly: frequent release of new features
-
-**Cons:**
-
-- Controlling state of story is difficult, especially for Angular
-- React focused: Docs aren't as fleshed out for Angular and some features don't work as seamlessly
-- Evolving rapidly: frequent changes to API
-
-### Demo App
-
-**Pros:**
-
-- Good for showing examples of complex usage and composition of multiple components
-- Can serve as example of Angular best practices for rest of organization
-- Can verify that there are no issues with library after it is published
-
-**Cons:**
-
-- Lots of extra work creating structure, setting up routes, etc...
-- Capturing all states is tedious and time consuming
-- Difficult to provide meaningful documentation and usage examples
+- configure Storybook for our library
+- automatically generate a story for each of our components
+- stub controls for each of our component's inputs
+- configure Cypress to work with our stories and generate an e2e app
+- configure Compodoc to generate documentation
 
 ## Walkthrough
 
@@ -60,9 +35,19 @@ We'll go through setup and then implement some of Storybook's useful features. T
 
 ### 00-editable-library
 
-We are going to be working with a component library called `editable`. It's designed to facilitate inline editing of documents, similar to updating a single field in a JIRA ticket. Right now there is only a single component, but we'll add Storybook now. We want to make sure we are documenting these components as we build them to help ensure adoption in our organization.
+We are going to be working with a component library called `editable`. It's designed to facilitate inline editing of documents, similar to updating a single field in a JIRA ticket. Right now there is only two components, but by adding Storybook early we can showcase and document our library as we build it. It's not much work to add it to our development process and keeping our demos, and docs current will increase adoption in our organization or target market.
 
-When you follow this guide with your own project, substitute your project's name for `editable` in all of the bash commands.
+Let's start by cloning the repo
+
+`git clone https://github.com/nayfin/demo-co.git`
+
+
+And checking out the starting branch
+
+`git checkout 00-editable-library`
+
+
+>When you follow this guide on your own project, substitute your project's name for `editable` in all of the bash commands.
 
 ### 01-installs-storybook
 
@@ -108,9 +93,9 @@ export const primary = () => ({
 
 ### 03-constrain-knobs
 
-You'll notice the `knobs` generated in our story by the nx schematic. While these are great, currently they accept any string, which doesn't do much to convey the acceptable inputs to the user. So, let's refine them to constrain the knobs, this will keep invalid inputs from breaking the story and help convey valid inputs to the consumer
+You'll notice the `knobs` generated in our story by the nx schematic. While these are great, we can refine them to help convey the acceptable inputs to library consumers.
 
-Import the new knobs:
+First, update the knobs we are importing
 
 ```ts
 import { text, select, color } from '@storybook/addon-knobs';
@@ -127,8 +112,8 @@ export const primary = () => ({
     textValue: text('textValue', ''),
   }
 })
-
 ```
+Now, check out the browser and see how the  controls have changed in the `knobs` tab.
 
 ### 04-use-storybook-actions-to-monitor-outputs
 
@@ -141,7 +126,7 @@ module.exports = {
   stories: [],
   addons: [
     '@storybook/addon-actions',
-    '@storybook/addon-knobs/register',
+    ...
   ],
 };
 ```
@@ -155,10 +140,10 @@ import { action } from '@storybook/addon-actions';
 And updating our props to use the action
 
 ```ts
-  props: {
-    ...
-    updateText: action('updateText')
-  }
+props: {
+  ...
+  updateText: action('updateText')
+}
 ```
 
 Now if we check our story in the browser, we'll see a new tab `actions` next to our `knobs` tab.
@@ -453,6 +438,44 @@ updating.args = {
   state: 'updating',
 };
 ```
+
+
+## Storybook vs Demo app
+
+The most common method of developing/testing/showcasing/documenting components is to create a demo app and create an example for each of feature of each component.  There are pros and cons to each method.
+
+### Storybook
+
+**Pros:**
+
+- Isolated development, demos, unit  and e2e testing
+- Easily capture different states of component
+- Very fast onchange refreshes, and state is saved between onchange reloads
+- Easily publish documentation for users, and demos for designers and stakeholders
+- Markdown can be used for documentation and usage examples
+- Lots of supported frameworks
+- Evolving Rapidly: frequent release of new features
+
+**Cons:**
+
+- Controlling state of story is difficult, especially for Angular
+- React focused: Docs aren't as fleshed out for Angular and some features don't work as seamlessly
+- Evolving rapidly: frequent changes to API
+
+### Demo App
+
+**Pros:**
+
+- Good for showing examples of complex usage and composition of multiple components
+- Can serve as example of Angular best practices for rest of organization
+- Can verify that there are no issues with library after it is published
+
+**Cons:**
+
+- Lots of extra work creating structure, setting up routes, etc...
+- Capturing all states is tedious and time consuming
+- Difficult to provide meaningful documentation and usage examples
+
 
 ## Resources
 
