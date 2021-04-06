@@ -299,11 +299,10 @@ Some **markdown** description, or whatever you want
 ### Usage
 ```html
 <editable-text
-  [textValue]="'Initial Value'"
-  [state]="'displaying'"
-  (startEdit)="handleStartEdit()"
-  (cancelEdit)="handleCancelEdit()"
-  (updateText)="handleUpdateText($event)">
+  (updateText)="handleUpdate($event)"
+  [backgroundColor]="'rgb(37 152 35 / 45%)'"
+  [dataStatus]="status"
+  [textValue]="'Some text'">
 </editable-text>
 ```
 
@@ -334,14 +333,24 @@ export const withTemplate: Story<TextComponent> = (args: TextComponent): IStory 
   // Declare property values that should be duplicated across stories here
   props: {
     ...args
+    backgroundColor: 'rgb(37 152 35 / 45%)',
+    textValue: 'Some Text'
   },
   template: `
-    <h2>Displaying</h2>
-    <editable-text [textValue]="'initialValue'" [state]="'displaying'"></editable-text>
-    <h2>Editing</h2>
-    <editable-text [textValue]="'initialValue'" [state]="'editing'"></editable-text>
+    <h2>Saved</h2>
+    <editable-text
+      (updateText)="handleUpdate($event)"
+      [dataStatus]="'saved'"
+      [backgroundColor]="backgroundColor"
+      [textValue]="textValue">
+    </editable-text>
     <h2>Updating</h2>
-    <editable-text [textValue]="'initialValue'" [state]="'updating'"></editable-text>
+    <editable-text
+      (updateText)="handleUpdate($event)"
+      [dataStatus]="'updating'"
+      [backgroundColor]="backgroundColor"
+      [textValue]="textValue">
+    </editable-text>
   `
 });
 ```
@@ -423,22 +432,21 @@ const template: Story<TextComponent> = (args: TextComponent): IStory => ({
 // story representing editing state
 export const editing = template.bind({});
 editing.args = {
-  state: 'editing',
+  isEditing: true
 };
 
 // story representing editing state
-export const displaying = template.bind({});
+export const saved = template.bind({});
 displaying.args = {
-  state: 'displaying',
+  dataStatus: 'saved',
 };
 
 // story representing editing state
 export const updating = template.bind({});
 updating.args = {
-  state: 'updating',
+  dataStatus: 'updating',
 };
 ```
-
 
 ## Storybook vs Demo app
 
