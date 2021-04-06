@@ -1,6 +1,6 @@
 # Using Storybook and Nx to document component libraries
 
-### www.github.com/nayfin/demo-co/blob/main/STORYBOOK.md
+### https://github.com/nayfin/demo-co
 
 ## Nx and Storybook Overview
 
