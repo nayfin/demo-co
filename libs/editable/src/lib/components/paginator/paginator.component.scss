@@ -1,9 +1,19 @@
-:host {
+.container {
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 300px;
   background-color: rgb(113, 169, 216);
+
+  &.sm {
+    height: 40px;
+  }
+  &.md {
+    height: 50px;
+  }
+  &.lg {
+    height: 60px;
+  }
   button {
     font-family: inherit;
     font-size: 100%;
