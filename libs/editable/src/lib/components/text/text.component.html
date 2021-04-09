@@ -8,8 +8,7 @@
       (keydown.enter)="initiateUpdateText()"
       (keydown.tab)="initiateUpdateText()"
       (keydown.esc)="cancelUpdateText()"
-      (blur)="cancelUpdateText()"
-      #textInput/>
+      (blur)="cancelUpdateText()"/>
   </div>
   <ng-template #display>
     <p (click)="enableEditing()">

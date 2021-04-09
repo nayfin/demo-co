@@ -25,7 +25,6 @@ export class TextComponent implements OnInit {
 
   @Output() updateText = new EventEmitter<string>();
 
-  @ViewChild('textInput') textInput: ElementRef;
   control: FormControl;
 
   ngOnInit() {

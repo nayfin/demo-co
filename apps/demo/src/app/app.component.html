@@ -1,14 +1,28 @@
+<h2>Editable Text</h2>
 <editable-text
   (updateText)="handleUpdate($event)"
   [dataStatus]="status"
   [textValue]="someText">
-</editable-text>
+</editable-text> <br>
+<strong>inputs</strong>
+dataStatus: {{ status }} <br>
+textValue: {{ someText }}
 
-<hr>
-
+<h2>Paginator</h2>
 <editable-paginator
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (decrement)="decrementPage()"
   (increment)="incrementPage()">
 </editable-paginator>
+<strong>inputs</strong>
+currentPage: {{currentPage}} <br>
+totalPages: {{ totalPages}}
+<br>
+
+<h3>
+  Event Stream:
+</h3>
+<pre>
+  {{ eventStream | json }}
+</pre>

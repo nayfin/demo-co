@@ -309,8 +309,8 @@ Some **markdown** description, or whatever you want
 <editable-text
   (updateText)="handleUpdate($event)"
   [backgroundColor]="'rgb(37 152 35 / 45%)'"
-  [dataStatus]="status"
-  [textValue]="'Some text'">
+  [dataStatus]="statusProperty"
+  [textValue]="someTextProperty">
 </editable-text>
 ```
 

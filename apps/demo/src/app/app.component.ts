@@ -13,7 +13,10 @@ export class AppComponent {
   currentPage = 0;
   totalPages = 14;
 
+  eventStream: string[] = [];
+
   handleUpdate(newValue: string) {
+    this.logEvent('text updated')
     this.someText = newValue;
     this.status = 'updating';
     setTimeout(() => {
@@ -22,10 +25,16 @@ export class AppComponent {
   }
 
   incrementPage() {
+    this.logEvent('increment')
     this.currentPage++;
   }
 
   decrementPage() {
+    this.logEvent('decrement')
     this.currentPage--;
+  }
+
+  logEvent(name: string) {
+    this.eventStream.unshift(name);
   }
 }
