@@ -1,4 +1,4 @@
-import { text, number, boolean } from '@storybook/addon-knobs';
+import { text, select, color } from '@storybook/addon-knobs';
 import { TextComponent } from './text.component';
 import { TextModule } from './text.module';
 
@@ -14,8 +14,8 @@ export const primary = () => ({
   },
   component: TextComponent,
   props: {
-    backgroundColor: text('backgroundColor', `#D0B0DA`),
-    dataStatus: text('dataStatus', 'saved'),
+    backgroundColor: color('backgroundColor', `#D0B0DA`),
+    dataStatus: select('dataStatus', ['saved', 'updating'],'saved'),
     textValue: text('textValue', ''),
   }
 })

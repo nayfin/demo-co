@@ -1,4 +1,4 @@
-import { text, number, boolean } from '@storybook/addon-knobs';
+import { select, number } from '@storybook/addon-knobs';
 import { PaginatorComponent } from './paginator.component';
 
 export default {
@@ -13,6 +13,6 @@ export const primary = () => ({
   props: {
     totalPages: number('totalPages', 0),
     currentPage: number('currentPage', 0),
-    size: text('size', 'md'),
+    size: select('size', ['sm', 'md', 'lg'], 'md'),
   }
 })
