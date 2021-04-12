@@ -1,4 +1,6 @@
 import { select, number } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+
 import { PaginatorComponent } from './paginator.component';
 
 export default {
@@ -14,5 +16,7 @@ export const primary = () => ({
     totalPages: number('totalPages', 0),
     currentPage: number('currentPage', 0),
     size: select('size', ['sm', 'md', 'lg'], 'md'),
+    increment: action('increment'),
+    decrement: action('decrement')
   }
 })
