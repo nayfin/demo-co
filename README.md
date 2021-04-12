@@ -69,6 +69,8 @@ Run Nx storybook schematic (~1 min)
 nx g @nrwl/angular:storybook-configuration editable
 ```
 
+Respond `y` for yes to all the questions, because we want to the plugin to configure Cypress to run against our stories, and we want to generate a story for each component.
+
 Now run storybook
 
 ```bash
