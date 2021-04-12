@@ -66,7 +66,7 @@ npm i -D @nrwl/storybook @storybook/addon-actions @storybook/addon-docs
 Run Nx storybook schematic (~1 min)
 
 ```bash
-nx g @nrwl/angular:storybook-configuration editable
+npx nx g @nrwl/angular:storybook-configuration editable
 ```
 
 Respond `y` for yes to all the questions, because we want to the plugin to configure Cypress to run against our stories, and we want to generate a story for each component.
@@ -205,7 +205,7 @@ Compodoc is a great tool for auto-generating docs. We can leverage its output he
 
 ```bash
 nx add @twittwer/compodoc
-nx g @twittwer/compodoc:config editable
+npx nx g @twittwer/compodoc:config editable
 ```
 
 Add the docs addon in `.storybook/main.js`
@@ -326,7 +326,7 @@ Some **markdown** description, or whatever you want
 If you need to generate stories for new components in your library you can simply run:
 
 ```bash
-nx generate @nrwl/angular:stories editable --generateCypressSpecs
+npx nx generate @nrwl/angular:stories editable --generateCypressSpecs
 ```
 
 ### 09-template-usage
