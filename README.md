@@ -74,7 +74,7 @@ Respond `y` for yes to all the questions, because we want to the plugin to confi
 Now run storybook
 
 ```bash
-nx run editable:storybook
+npx nx run editable:storybook
 ```
 
 And we get an error, but this expected as our component has some dependencies, and we haven't added it them to the story's configuration. We'll fix that in the next step.
@@ -176,7 +176,7 @@ describe('editable', () => {
 We run the test in watch mode with:
 
 ```bash
-nx run editable-e2e:e2e --watch
+npx nx run editable-e2e:e2e --watch
 ```
 
 Now look closely at the URL in `cy.visit` call above. You might notice that the `id` query param has a value that corresponds to the name of the component and the story representing it (`id=textcomponent--primary`). The following query params correspond to the names of the knobs generated for our story (e.g `&knob-dataStatus=saved`). We can use these query params to drive the knobs during our tests.
@@ -243,12 +243,12 @@ export default {
 
 In one terminal generate the compodoc json
 ```bash
-nx run editable:compodoc:json --watch
+npx nx run editable:compodoc:json --watch
 ```
 
 In another terminal run storybook
 ```bash
-nx run editable:storybook
+npx nx run editable:storybook
 ```
 
 Now we can add some comments to the properties of the `TextComponent` code and it will be reflected in our Storybook docs.
@@ -408,7 +408,7 @@ Running two terminals to keep our storybook stories inline with our compodoc doc
 }
 ```
 
-Now we can run `nx run editable:storydoc` to run in watch mode `nx run editable:storydoc` to build storybook for deployment to a docs or showcase page.
+Now we can run `npx nx run editable:storydoc` to run in watch mode `npx nx run editable:storydoc` to build storybook for deployment to a docs or showcase page.
 
 ### 11-abstracting-reusable-story
 
