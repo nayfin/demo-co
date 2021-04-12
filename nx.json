@@ -25,6 +25,7 @@
     "demo-e2e": { "tags": [], "implicitDependencies": ["demo"] },
     "api": { "tags": [] },
     "api-interfaces": { "tags": [] },
-    "editable": { "tags": [] }
+    "editable": { "tags": [] },
+    "editable-e2e": { "tags": [], "implicitDependencies": ["editable"] }
   }
 }
