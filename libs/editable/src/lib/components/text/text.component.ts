@@ -40,6 +40,7 @@ export class TextComponent implements OnInit {
   }
 
   cancelUpdateText() {
+    this.control.setValue(this._textValue);
     this.isEditing = false
   }
 
