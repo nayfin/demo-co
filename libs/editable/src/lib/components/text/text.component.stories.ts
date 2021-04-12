@@ -1,5 +1,6 @@
 import { text, number, boolean } from '@storybook/addon-knobs';
 import { TextComponent } from './text.component';
+import { TextModule } from './text.module';
 
 export default {
   title: 'TextComponent'
@@ -7,7 +8,9 @@ export default {
 
 export const primary = () => ({
   moduleMetadata: {
-    imports: []
+    imports: [
+      TextModule
+    ]
   },
   component: TextComponent,
   props: {
