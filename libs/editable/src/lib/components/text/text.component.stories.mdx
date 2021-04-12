@@ -1,0 +1,46 @@
+<!-- Import our dependancies for the stories -->
+import { TextModule } from './text.module';
+import { TextComponent } from './text.component';
+
+<!-- As well as some built in storybook components that we'll use in the documentation -->
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
+
+<!-- The meta component tells Storybook the title of the story and which component it's for -->
+<Meta title='Editable Text Component/MDX' component={TextComponent} />
+
+# Editable Text Component
+
+Some **markdown** description, or whatever you want
+
+## Visual States
+
+### displaying
+
+<!-- Configure the story using the Story component -->
+<Story name="basic" height="60px">
+  {{
+    component: TextComponent,
+    moduleMetadata: {
+      imports: [TextModule]
+    },
+    props: {
+      dataStatus: 'saved',
+      textValue: 'Initial Value'
+    }
+  }}
+</Story>
+
+<!-- Use a code snippet to show users an example of usage -->
+### Usage
+```html
+<editable-text
+  (updateText)="handleUpdate($event)"
+  [backgroundColor]="'rgb(37 152 35 / 45%)'"
+  [dataStatus]="statusProperty"
+  [textValue]="someTextProperty">
+</editable-text>
+```
+
+## ArgsTable
+<!-- Use the ArgTable component to display property definitions for component -->
+<ArgsTable of={TextComponent} />
