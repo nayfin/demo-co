@@ -9,7 +9,9 @@ import { DataStatus } from '../../models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextComponent implements OnInit {
-
+  /**
+   * Used to change the background color of the component
+   */
   @Input() @HostBinding('style.background') backgroundColor = `#D0B0DA`;
 
   @Input() dataStatus: DataStatus = 'saved';

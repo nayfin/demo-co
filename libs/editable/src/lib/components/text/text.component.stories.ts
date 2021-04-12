@@ -4,7 +4,8 @@ import { TextComponent } from './text.component';
 import { TextModule } from './text.module';
 
 export default {
-  title: 'TextComponent'
+  title: 'TextComponent',
+  component: TextComponent
 }
 
 export const primary = () => ({

@@ -4,7 +4,8 @@ import { action } from '@storybook/addon-actions';
 import { PaginatorComponent } from './paginator.component';
 
 export default {
-  title: 'PaginatorComponent'
+  title: 'PaginatorComponent',
+  component: PaginatorComponent
 }
 
 export const primary = () => ({
